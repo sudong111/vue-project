@@ -5,7 +5,9 @@ import Footer from "@/components/footer.vue";
 
 <template>
   <Header />
-  <router-view />
+  <div class="my-[3rem]">
+    <router-view />
+  </div>
   <Footer />
 </template>
 

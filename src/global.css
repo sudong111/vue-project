@@ -2,10 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
-.test {
-    @apply bg-gray-300
+.header {
+      @apply fixed w-full h-[3rem] top-0 border-b-2 z-50 bg-white
 }
 
+.header-wrapper {
+      @apply flex h-full items-center justify-between
+      mx-0 sm:mx-10 lg:mx-20
+}
+
+.menu {
+      @apply hidden sm:block lg:block
+}
+
+.menu-bar {
+      @apply block sm:hidden lg:hidden
+}
+
+.footer {
+
+}
+
+.view {
+      @apply flex flex-col gap-y-10
+}
+
+.view-wrapper {
+      @apply flex flex-col items-center my-10 w-full z-0
+}
+
+.carousel {
+      @apply border-2 rounded w-full h-full
+}
+
+.login {
+      @apply flex justify-center items-center w-[20rem] h-[20rem] px-4
+      sm:w-[30rem] sm:h-[30rem] lg:w-[40rem] lg:h-[40rem]
+      sm:px-8 lg:px-16
+}
+
+.carousel-item {
+      @apply flex w-full h-full justify-center
+}
 
 
 @layer base {
@@ -109,8 +147,6 @@
         --chart-4: 280 65% 60%;
 
         --chart-5: 340 75% 55%}}
-
-
 
 @layer base {
   * {
