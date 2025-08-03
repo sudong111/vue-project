@@ -70,6 +70,10 @@
     @apply mt-5 text-white text-sm sm:text-2xl lg:text-3xl
 }
 
+/*nomination*/
+.nomination {
+    @apply flex justify-center w-full h-full
+}
 
 @layer base {
       :root {
