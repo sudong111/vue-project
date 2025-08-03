@@ -1,13 +1,13 @@
 <script setup lang="ts">
   import Carousel from "@/components/carousel.vue"
+  import Nomination from "@/components/nomination.vue";
 </script>
 
 <template>
   <div class="view">
     <div class="view-wrapper">
-      <div class="w-full h-[25rem] sm:w-full sm:h-[35rem] lg:w-full lg:h-[60rem]">
-        <Carousel/>
-      </div>
+      <Carousel />
+      <Nomination />
     </div>
   </div>
 </template>

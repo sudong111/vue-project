@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/*header*/
 .header {
       @apply fixed w-full h-[4rem] top-0 border-b-2 z-50 bg-white
 }
@@ -9,6 +10,14 @@
 .header-wrapper {
       @apply flex h-full items-center justify-between
       mx-5 sm:mx-10 lg:mx-20
+}
+
+.header-button-text {
+    @apply hidden sm:hidden lg:block
+}
+
+.header-img {
+    @apply w-full h-full object-contain
 }
 
 .menu {
@@ -19,42 +28,51 @@
       @apply block sm:hidden lg:hidden
 }
 
+/*footer*/
 .footer {
 
 }
 
+/*views*/
 .view {
-      @apply flex flex-col gap-y-10
+      @apply flex flex-col gap-10
 }
 
 .view-wrapper {
-      @apply flex flex-col items-center w-full z-0
+      @apply flex flex-col items-center w-full gap-20
 }
 
-.carousel {
-      @apply rounded w-full h-full
-}
-
+/*login*/
 .login {
       @apply flex justify-center items-center w-[20rem] h-[20rem] px-4
       sm:w-[30rem] sm:h-[30rem] lg:w-[40rem] lg:h-[40rem]
       sm:px-8 lg:px-16
 }
 
-.carousel-item {
+/*Carousel*/
+.carousel {
+      @apply rounded w-full h-[25rem] sm:w-full sm:h-[35rem] lg:w-full lg:h-[60rem]
+}
+
+.carousel-banner {
       @apply flex w-full h-full bg-cover bg-center cursor-pointer
 }
 
-.button-text {
-      @apply hidden sm:hidden lg:block
+.carousel-banner-text {
+      @apply flex flex-col w-full justify-center items-center select-none
 }
 
-.img {
-      @apply w-full h-full object-contain
+.carousel-banner-title {
+      @apply font-extralight text-white
 }
+
+.carousel-banner-desc {
+    @apply mt-5 text-white text-sm sm:text-2xl lg:text-3xl
+}
+
 
 @layer base {
-  :root {
+      :root {
 
         --background: 0 0% 100%;
 
@@ -159,4 +177,4 @@
   * {
     @apply border-border;}
   body {
-    @apply bg-background text-foreground;}}
+    @apply bg-background text-foreground font-sans;}}
