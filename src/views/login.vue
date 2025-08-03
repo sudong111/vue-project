@@ -7,12 +7,23 @@ import {Label} from '@/components/ui/label'
 import {Button} from "@/components/ui/button";
 import {useNavigation} from "@/utils/navigation.ts";
 import {useUserStore} from "@/stores/user.ts";
+import Alert from "@/components/alert.vue";
 
 const username = ref('')
 const password = ref('')
 const rememberId = ref(false)
 const { handleViewChanged } = useNavigation();
 const userStore = useUserStore();
+const alertInfo = ref({
+  show: false,
+  variant: 'default',
+  title: '',
+  description: '',
+});
+
+const hideAlert = () => {
+  alertInfo.value.show = false;
+};
 
 const login = async () => {
   const loginPayload = {
@@ -34,17 +45,26 @@ const login = async () => {
       // 로그인이 성공한 경우
       const userData = await response.json();
       userStore.login(userData);
-      alert('로그인 성공');
       handleViewChanged('/');
     } else {
       // 로그인이 실패한 경우
       const errorText = await response.text()
-      alert(errorText);
+      alertInfo.value = {
+        show: true,
+        variant: 'destructive',
+        title: '로그인 실패',
+        description: errorText,
+      };
     }
   } catch (error) {
     // 네트워크 오류 등의 예외 처리
     console.error('Login failed:', error)
-    alert('네트워크 오류가 발생했습니다.');
+    alertInfo.value = {
+      show: true,
+      variant: 'destructive',
+      title: '로그인 실패',
+      description: '네트워크 오류로 인해 로그인에 실패하였습니다. ' + error,
+    };
   }
 }
 </script>
@@ -56,6 +76,13 @@ const login = async () => {
         <Card class="login">
           <div class="flex flex-col w-full gap-6">
             <Label class="font-bold text-xl">Log-in</Label>
+            <Alert
+                v-if="alertInfo.show"
+                :variant="alertInfo.variant"
+                :title="alertInfo.title"
+                :description="alertInfo.description"
+                @close="hideAlert"
+            />
             <Input placeholder="id" v-model="username"></Input>
             <Input type="password" placeholder="password" v-model="password"></Input>
             <div class="flex justify-between w-full">

@@ -29,14 +29,12 @@ public class LoginController {
      */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        // 로그인 서비스에서 User 객체를 반환하도록 수정
         User authenticatedUser = loginService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
 
         if (authenticatedUser != null) {
-            // 성공 시 User 객체를 JSON 형태로 반환합니다.
             return ResponseEntity.ok(authenticatedUser);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("존재하지 않는 계정이거나 비밀번호가 틀렸습니다.");
         }
     }
 }
