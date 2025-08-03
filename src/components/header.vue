@@ -3,8 +3,15 @@
   import {Input} from '@/components/ui/input'
   import MenuBar from '@/components/menu-bar.vue'
   import { useNavigation } from "@/utils/navigation"
+  import { useUserStore } from "@/stores/user"
 
-  const { handleViewButtonClicked } = useNavigation()
+  const { handleViewChanged } = useNavigation()
+  const userStore = useUserStore();
+
+  const handleLogout = () => {
+    userStore.logout();
+    handleViewChanged('/');
+  };
 
 </script>
 
@@ -12,24 +19,24 @@
   <div class="header">
     <div class="header-wrapper">
       <div class="flex gap-6">
-        <Button variant="ghost" @click="handleViewButtonClicked('')">
+        <Button variant="ghost" @click="handleViewChanged('')">
           <img class="header-img" src="@/assets/icons/home-icon.png" alt=""/>
           <p class="header-button-text">home</p>
         </Button>
         <div class="menu">
-          <Button variant="ghost" @click="handleViewButtonClicked('acoustic')">
+          <Button variant="ghost" @click="handleViewChanged('acoustic')">
             <img class="header-img" src="@/assets/icons/acoustic-icon.png" alt=""/>
             <p class="header-button-text">acoustic</p>
           </Button>
-          <Button variant="ghost" @click="handleViewButtonClicked('electric')">
+          <Button variant="ghost" @click="handleViewChanged('electric')">
             <img class="header-img" src="@/assets/icons/electric-icon.png" alt=""/>
             <p class="header-button-text">electric</p>
           </Button>
-          <Button variant="ghost" @click="handleViewButtonClicked('base')">
+          <Button variant="ghost" @click="handleViewChanged('base')">
             <img class="header-img" src="@/assets/icons/base-icon.png" alt=""/>
             <p class="header-button-text">base</p>
           </Button>
-          <Button variant="ghost" @click="handleViewButtonClicked('etc')">
+          <Button variant="ghost" @click="handleViewChanged('etc')">
             <img class="header-img" src="@/assets/icons/peek-icon.png" alt=""/>
             <p class="header-button-text">etc</p>
           </Button>
@@ -37,7 +44,17 @@
       </div>
       <div class="flex sm:w-[15rem] md:w-[25rem] lg:w-[30rem]">
         <Input class="w-full" placeholder="search"></Input>
-        <Button variant="ghost" @click="handleViewButtonClicked('login')">login</Button>
+        <Button  v-if="!userStore.isLoggedIn"
+                 variant="ghost"
+                 @click="handleViewChanged('login')">login
+        </Button>
+        <Button
+            v-else
+            variant="ghost"
+            @click="handleLogout"
+        >
+          logout
+        </Button>
         <MenuBar/>
       </div>
     </div>

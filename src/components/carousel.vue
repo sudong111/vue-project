@@ -5,7 +5,8 @@ import { useNavigation } from "@/utils/navigation"
 import ElectricBanner from '@/assets/banners/electric-guitar-1.jpg'
 import AcousticBanner from '@/assets/banners/acoustic-guitar-1.jpg'
 import BaseBanner from '@/assets/banners/bass-guitar-1.jpg'
-const { handleViewButtonClicked } = useNavigation();
+
+const { handleViewChanged } = useNavigation();
 </script>
 
 <template>
@@ -15,7 +16,7 @@ const { handleViewButtonClicked } = useNavigation();
         <div
             class="carousel-banner"
             :style="{backgroundImage: `url(${ElectricBanner})`}"
-            @click="handleViewButtonClicked('electric')"
+            @click="handleViewChanged('electric')"
         >
           <div class="carousel-banner-text">
             <p class="carousel-banner-title text-xl sm:text-4xl lg:text-6xl"
@@ -33,7 +34,7 @@ const { handleViewButtonClicked } = useNavigation();
         <div
             class="carousel-banner"
             :style="{backgroundImage: `url(${AcousticBanner})`}"
-            @click="handleViewButtonClicked('acoustic')"
+            @click="handleViewChanged('acoustic')"
         >
           <div class="carousel-banner-text">
             <p class="carousel-banner-title text-2xl sm:text-6xl lg:text-8xl"
@@ -51,7 +52,7 @@ const { handleViewButtonClicked } = useNavigation();
         <div
             class="carousel-banner"
             :style="{backgroundImage: `url(${BaseBanner})`}"
-            @click="handleViewButtonClicked('base')"
+            @click="handleViewChanged('base')"
         >
           <div class="carousel-banner-text">
             <p class="carousel-banner-title text-2xl sm:text-6xl lg:text-8xl"

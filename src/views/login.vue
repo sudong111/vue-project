@@ -1,10 +1,52 @@
 <script setup lang="ts">
-  import {Card} from '@/components/ui/card'
-  import {Input} from '@/components/ui/input'
-  import {Checkbox} from '@/components/ui/checkbox'
-  import {Label} from '@/components/ui/label'
-  import {Button} from "@/components/ui/button";
+import { ref } from 'vue'
+import {Card} from '@/components/ui/card'
+import {Input} from '@/components/ui/input'
+import {Checkbox} from '@/components/ui/checkbox'
+import {Label} from '@/components/ui/label'
+import {Button} from "@/components/ui/button";
+import {useNavigation} from "@/utils/navigation.ts";
+import {useUserStore} from "@/stores/user.ts";
 
+const username = ref('')
+const password = ref('')
+const rememberId = ref(false)
+const { handleViewChanged } = useNavigation();
+const userStore = useUserStore();
+
+const login = async () => {
+  const loginPayload = {
+    username: username.value,
+    password: password.value
+  }
+
+  try {
+    // fetch API를 사용해 백엔드에 POST 요청을 보냅니다.
+    const response = await fetch('http://localhost:8080/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(loginPayload)
+    })
+
+    if (response.ok) {
+      // 로그인이 성공한 경우
+      const userData = await response.json();
+      userStore.login(userData);
+      alert('로그인 성공');
+      handleViewChanged('/');
+    } else {
+      // 로그인이 실패한 경우
+      const errorText = await response.text()
+      alert(errorText);
+    }
+  } catch (error) {
+    // 네트워크 오류 등의 예외 처리
+    console.error('Login failed:', error)
+    alert('네트워크 오류가 발생했습니다.');
+  }
+}
 </script>
 
 <template>
@@ -14,8 +56,8 @@
         <Card class="login">
           <div class="flex flex-col w-full gap-6">
             <Label class="font-bold text-xl">Log-in</Label>
-            <Input placeholder="id"></Input>
-            <Input type="password" placeholder="password"></Input>
+            <Input placeholder="id" v-model="username"></Input>
+            <Input type="password" placeholder="password" v-model="password"></Input>
             <div class="flex justify-between w-full">
               <div class="flex gap-1 items-center">
                 <Checkbox></Checkbox>
@@ -30,7 +72,7 @@
               <Label class="hover:underline">아이디 찾기</Label>
               <Label class="hover:underline">비밀번호 찾기</Label>
             </div>
-            <Button class="bg-blue-500">Log-in</Button>
+            <Button class="bg-blue-500" @click="login">Log-in</Button>
           </div>
         </Card>
       </div>

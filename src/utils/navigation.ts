@@ -2,9 +2,9 @@ import { useRouter } from "vue-router"
 
 export function useNavigation() {
     const router = useRouter()
-    function handleViewButtonClicked(view: string) {
+    function handleViewChanged(view: string) {
         router.push(`/${view}`)
     }
 
-    return { handleViewButtonClicked }
+    return { handleViewChanged }
 }

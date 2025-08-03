@@ -9,7 +9,7 @@ import {
 import {Button} from "@/components/ui/button";
 import { useNavigation } from "@/utils/navigation"
 
-const { handleViewButtonClicked } = useNavigation()
+const { handleViewChanged } = useNavigation()
 </script>
 
 <template>
@@ -19,25 +19,25 @@ const { handleViewButtonClicked } = useNavigation()
         <MenubarTrigger>menu</MenubarTrigger>
         <MenubarContent>
           <MenubarItem>
-            <Button variant="ghost" @click="handleViewButtonClicked('acoustic')">
+            <Button variant="ghost" @click="handleViewChanged('acoustic')">
               <img class="img" src="@/assets/icons/acoustic-icon.png" alt=""/>
               <p>acoustic</p>
             </Button>
           </MenubarItem>
           <MenubarItem>
-            <Button variant="ghost" @click="handleViewButtonClicked('electric')">
+            <Button variant="ghost" @click="handleViewChanged('electric')">
               <img class="img" src="@/assets/icons/electric-icon.png" alt=""/>
               <p>electric</p>
             </Button>
           </MenubarItem>
           <MenubarItem>
-            <Button variant="ghost" @click="handleViewButtonClicked('base')">
+            <Button variant="ghost" @click="handleViewChanged('base')">
               <img class="img" src="@/assets/icons/base-icon.png" alt=""/>
               <p>base</p>
             </Button>
           </MenubarItem>
           <MenubarItem>
-            <Button variant="ghost" @click="handleViewButtonClicked('etc')">
+            <Button variant="ghost" @click="handleViewChanged('etc')">
               <img class="img" src="@/assets/icons/peek-icon.png" alt=""/>
               <p>etc</p>
             </Button>
