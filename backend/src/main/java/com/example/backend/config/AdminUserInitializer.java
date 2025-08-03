@@ -32,7 +32,7 @@ public class AdminUserInitializer {
                 admin.setEmail("admin@example.com");
 
                 // 데이터베이스에 관리자 계정을 저장합니다.
-                userRepository.save(admin);
+                userRepository.insertUser(admin);
                 System.out.println("기본 관리자 계정 생성 성공");
             }
         };

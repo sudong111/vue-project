@@ -1,5 +1,5 @@
 /**
- * 사용자 정보를 나타내는 인터페이스
+ * 사용자 정보
  */
 export interface User {
     id: number;
@@ -7,3 +7,12 @@ export interface User {
     authority: string;
     email: string;
 }
+
+/**
+ *  유효성 검사 정보
+ */
+export interface Validation {
+    isValid: boolean;
+    message: string;
+}
+

@@ -16,8 +16,8 @@ public interface UserRepository {
 
     /**
      * 새로운 사용자 정보를 저장합니다.
+     *
      * @param user 저장할 User 객체
-     * @return 성공적으로 삽입된 레코드 수
      */
-    int save(User user);
+    void insertUser(User user);
 }
