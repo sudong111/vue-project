@@ -10,6 +10,6 @@ import lombok.Setter;
 public class LoginResponseDto {
     private String token;
     private long expiresIn;
-    private String userId;
+    private String username;
 }
 

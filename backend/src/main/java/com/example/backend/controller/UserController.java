@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 
-// @RequiredArgsConstructor가 생성자 주입을 대신해줍니다.
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -35,17 +34,15 @@ public class UserController {
             @Validated(ValidationGroups.LoginGroup.class)
             @RequestBody UserDto user) {
 
-        // userService의 authenticate 메소드로 사용자 인증
         ResponseDto<User> authenticatedUser = userService.authenticate(user.getUsername(), user.getPassword());
 
         if (authenticatedUser.isResult()) {
             String jwtToken = jwtTokenProvider.generateToken(authenticatedUser.getData().getUsername());
 
-            // ⭐ LoginResponseDto에 토큰과 사용자 정보 담아서 반환
             LoginResponseDto response = LoginResponseDto.builder()
                     .token(jwtToken)
                     .expiresIn(jwtTokenProvider.getTokenValidityInMilliseconds())
-                    .userId(authenticatedUser.getData().getUsername())
+                    .username(authenticatedUser.getData().getUsername())
                     .build();
 
             return ResponseEntity.ok(response);

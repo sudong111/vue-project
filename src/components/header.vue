@@ -1,17 +1,17 @@
 <script setup lang="ts">
-  import {Button} from '@/components/ui/button'
-  import {Input} from '@/components/ui/input'
-  import MenuBar from '@/components/menu-bar.vue'
-  import { useNavigation } from "@/utils/navigation"
-  import { useUserStore } from "@/stores/user"
+import {Button} from '@/components/ui/button'
+import {Input} from '@/components/ui/input'
+import MenuBar from '@/components/menu-bar.vue'
+import { useNavigation } from "@/utils/navigation"
+import { useUserStore } from "@/stores/user"
 
-  const { handleViewChanged } = useNavigation()
-  const userStore = useUserStore();
+const { handleViewChanged } = useNavigation()
+const userStore = useUserStore();
 
-  const handleLogout = () => {
-    userStore.logout();
-    handleViewChanged('/');
-  };
+const handleLogout = () => {
+  userStore.logout();
+  handleViewChanged('/');
+};
 
 </script>
 
@@ -45,30 +45,30 @@
       <div class="flex gap-4 sm:w-[15rem] md:w-[25rem] lg:w-[30rem]">
         <Input class="w-full" placeholder="search"></Input>
         <div class="menu">
-        <Button  v-if="!userStore.isLoggedIn"
-                 variant="ghost"
-                 @click="handleViewChanged('login')">login
-        </Button>
+          <Button  v-if="!userStore.isLoggedIn"
+                   variant="ghost"
+                   @click="handleViewChanged('login')">login
+          </Button>
           <Button
               v-if="userStore.isLoggedIn"
               variant="ghost"
               @click="handleViewChanged('user')">
             <img class="header-img" src="@/assets/icons/user-icon.png" alt=""/>
-            <p>{{ userStore.user?.username }}</p>
+            <p>{{ userStore.username }}</p>
           </Button>
           <Button
-            v-if="userStore.isLoggedIn"
-            variant="ghost"
-            @click="handleLogout">
-          logout
-        </Button>
-        <Button
-            v-if="!userStore.isLoggedIn"
-            variant="outline"
-            @click="handleViewChanged('sign-up')"
-        >
-          sign-up
-        </Button>
+              v-if="userStore.isLoggedIn"
+              variant="ghost"
+              @click="handleLogout">
+            logout
+          </Button>
+          <Button
+              v-if="!userStore.isLoggedIn"
+              variant="outline"
+              @click="handleViewChanged('sign-up')"
+          >
+            sign-up
+          </Button>
         </div>
         <MenuBar/>
       </div>

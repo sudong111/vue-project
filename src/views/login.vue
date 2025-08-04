@@ -38,48 +38,22 @@ const login = async () => {
     return;
   }
 
+  const result = await userStore.login(username.value, password.value);
 
-  const loginPayload = {
-    username: username.value,
-    password: password.value
+  if (result.isSuccess) {
+    handleViewChanged('/');
   }
-
-  try {
-    // fetch API를 사용해 백엔드에 POST 요청을 보냅니다.
-    const response = await fetch('http://localhost:8080/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(loginPayload)
-    })
-
-    if (response.ok) {
-      // 로그인이 성공한 경우
-      const userData = await response.json();
-      userStore.login(userData);
-      handleViewChanged('/');
-    } else {
-      // 로그인이 실패한 경우
-      const errorText = await response.text()
-      alertInfo.value = {
-        show: true,
-        variant: 'destructive',
-        title: '로그인 실패',
-        description: errorText,
-      };
-    }
-  } catch (error) {
-    // 네트워크 오류 등의 예외 처리
-    console.error('Login failed:', error)
+  else {
     alertInfo.value = {
       show: true,
       variant: 'destructive',
       title: '로그인 실패',
-      description: '네트워크 오류로 인해 로그인에 실패하였습니다. ' + error,
+      description: result.message,
     };
   }
 }
+
+
 </script>
 
 <template>
