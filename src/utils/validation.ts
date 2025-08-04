@@ -84,11 +84,24 @@ export const isStrongPassword = (value: string, fieldName: string): Validation =
     return { isValid: true, message: '' };
 };
 
+// 값 일치 체크
+export const isSameValue = (target: string, targetFieldName: string) => {
+    return (value: string, fieldName: string): Validation => {
+        if (value === target) {
+            return { isValid: true, message: '' };
+        }
+        return { isValid: false, message: `입력한 ${targetFieldName}와(과) 일치하지 않습니다.` };
+    };
+};
+
 // 이메일 형식 규칙
 export const isEmail = (value: string, fieldName: string): Validation => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(value)) {
-        return { isValid: false, message: `유효한 ${fieldName} 을 입력해주세요.` };
+        return {
+            isValid: false,
+            message: `유효한 ${fieldName} 을 입력해주세요.`
+        };
     }
     return { isValid: true, message: '' };
 };

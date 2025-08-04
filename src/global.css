@@ -35,18 +35,18 @@
 
 /*views*/
 .view {
-      @apply flex flex-col gap-10
+      @apply grow h-full
 }
 
 .view-wrapper {
       @apply flex flex-col items-center w-full gap-20
 }
 
-/*login*/
-.login {
-      @apply flex justify-center items-center w-[20rem] h-[20rem] px-4
+/*login & sign-up*/
+.form-card {
+      @apply flex justify-center items-center p-4 sm:p-8 lg:p-16
+      w-full h-full
       sm:w-[30rem] sm:h-[30rem] lg:w-[40rem] lg:h-[40rem]
-      sm:px-8 lg:px-16
 }
 
 /*Carousel*/

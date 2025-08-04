@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import {Card} from '@/components/ui/card'
 import {Input} from '@/components/ui/input'
-import {Checkbox} from '@/components/ui/checkbox'
 import {Label} from '@/components/ui/label'
 import {Button} from "@/components/ui/button";
 import {useNavigation} from "@/utils/navigation.ts";
@@ -12,7 +11,6 @@ import Alert from "@/components/alert.vue";
 
 const username = ref('')
 const password = ref('')
-const rememberId = ref(false)
 const { handleViewChanged } = useNavigation();
 const userStore = useUserStore();
 const { validateField, validationErrors, isFormValid } = useValidation();
@@ -29,7 +27,7 @@ const hideAlert = () => {
 
 const clearValidationError = (fieldName: string) => {
   delete validationErrors.value[fieldName];
-  alertInfo.value.show = false;
+  hideAlert();
 };
 
 const login = async () => {
@@ -88,9 +86,9 @@ const login = async () => {
   <div class="view">
     <div class="view-wrapper">
       <div class="mt-20">
-        <Card class="login">
+        <Card class="form-card">
           <form class="flex flex-col w-full gap-6" @submit.prevent="login">
-            <Label class="font-bold text-xl">Log-in</Label>
+            <Label class="font-bold text-xl">로그인</Label>
             <Alert
                 v-if="alertInfo.show"
                 :variant="alertInfo.variant"
@@ -117,8 +115,7 @@ const login = async () => {
             <p v-if="validationErrors.password" class="text-red-500 text-sm">{{ validationErrors.password }}</p>
             <div class="flex justify-between w-full">
               <div class="flex gap-1 items-center">
-                <Checkbox v-model="rememberId"></Checkbox>
-                <Label>아이디 기억하기</Label>
+                <Label class="hover:underline" @click="handleViewChanged('sign-up')">회원 가입</Label>
               </div>
               <div class="hidden gap-4 text-gray-400 sm:flex lg:flex">
                 <Label class="hover:underline">아이디 찾기</Label>
@@ -129,7 +126,7 @@ const login = async () => {
               <Label class="hover:underline">아이디 찾기</Label>
               <Label class="hover:underline">비밀번호 찾기</Label>
             </div>
-            <Button class="bg-blue-500" type="submit">Log-in</Button>
+            <Button variant="submit" type="submit">Log-in</Button>
           </form>
         </Card>
       </div>

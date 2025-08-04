@@ -11,7 +11,7 @@
     </select>
 
     <!-- 사용자 정보를 저장하는 쿼리 -->
-    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO users (username, password, authority, email)
         VALUES (#{username}, #{password}, #{authority}, #{email})
     </insert>

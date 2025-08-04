@@ -5,8 +5,10 @@ import Footer from "@/components/footer.vue";
 
 <template>
   <Header />
-  <div class="my-[4rem]">
-    <router-view />
+  <div class="mt-[4rem]">
+    <div class="flex flex-col min-h-screen">
+      <router-view />
+    </div>
   </div>
   <Footer />
 </template>

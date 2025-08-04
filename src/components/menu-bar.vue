@@ -20,25 +20,25 @@ const { handleViewChanged } = useNavigation()
         <MenubarContent>
           <MenubarItem>
             <Button variant="ghost" @click="handleViewChanged('acoustic')">
-              <img class="img" src="@/assets/icons/acoustic-icon.png" alt=""/>
+              <img class="header-img" src="@/assets/icons/acoustic-icon.png" alt=""/>
               <p>acoustic</p>
             </Button>
           </MenubarItem>
           <MenubarItem>
             <Button variant="ghost" @click="handleViewChanged('electric')">
-              <img class="img" src="@/assets/icons/electric-icon.png" alt=""/>
+              <img class="header-img" src="@/assets/icons/electric-icon.png" alt=""/>
               <p>electric</p>
             </Button>
           </MenubarItem>
           <MenubarItem>
             <Button variant="ghost" @click="handleViewChanged('base')">
-              <img class="img" src="@/assets/icons/base-icon.png" alt=""/>
+              <img class="header-img" src="@/assets/icons/base-icon.png" alt=""/>
               <p>base</p>
             </Button>
           </MenubarItem>
           <MenubarItem>
             <Button variant="ghost" @click="handleViewChanged('etc')">
-              <img class="img" src="@/assets/icons/peek-icon.png" alt=""/>
+              <img class="header-img" src="@/assets/icons/peek-icon.png" alt=""/>
               <p>etc</p>
             </Button>
           </MenubarItem>
