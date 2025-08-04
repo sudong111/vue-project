@@ -16,7 +16,6 @@ public interface UserRepository {
 
     /**
      * 새로운 사용자 정보를 저장합니다.
-     *
      * @param user 저장할 User 객체
      */
     void insertUser(User user);

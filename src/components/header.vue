@@ -42,19 +42,34 @@
           </Button>
         </div>
       </div>
-      <div class="flex sm:w-[15rem] md:w-[25rem] lg:w-[30rem]">
+      <div class="flex gap-4 sm:w-[15rem] md:w-[25rem] lg:w-[30rem]">
         <Input class="w-full" placeholder="search"></Input>
+        <div class="menu">
         <Button  v-if="!userStore.isLoggedIn"
                  variant="ghost"
                  @click="handleViewChanged('login')">login
         </Button>
-        <Button
-            v-else
+          <Button
+              v-if="userStore.isLoggedIn"
+              variant="ghost"
+              @click="handleViewChanged('user')">
+            <img class="header-img" src="@/assets/icons/user-icon.png" alt=""/>
+            <p>{{ userStore.user?.username }}</p>
+          </Button>
+          <Button
+            v-if="userStore.isLoggedIn"
             variant="ghost"
-            @click="handleLogout"
-        >
+            @click="handleLogout">
           logout
         </Button>
+        <Button
+            v-if="!userStore.isLoggedIn"
+            variant="outline"
+            @click="handleViewChanged('sign-up')"
+        >
+          sign-up
+        </Button>
+        </div>
         <MenuBar/>
       </div>
     </div>

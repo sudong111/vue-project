@@ -5,11 +5,18 @@ import {
   MenubarItem,
   MenubarMenu,
   MenubarTrigger,
+  MenubarSeparator,
 } from "@/components/ui/menubar"
-import {Button} from "@/components/ui/button";
+import {Button} from "@/components/ui/button"
 import { useNavigation } from "@/utils/navigation"
+import { useUserStore } from "@/stores/user"
 
-const { handleViewChanged } = useNavigation()
+const { handleViewChanged } = useNavigation();
+const userStore = useUserStore();
+const handleLogout = () => {
+  userStore.logout();
+  handleViewChanged('/');
+};
 </script>
 
 <template>
@@ -18,6 +25,15 @@ const { handleViewChanged } = useNavigation()
       <MenubarMenu>
         <MenubarTrigger>menu</MenubarTrigger>
         <MenubarContent>
+          <MenubarItem>
+            <Button
+                v-if="!userStore.isLoggedIn"
+                variant="ghost"
+                @click="handleViewChanged('login')">
+              <img class="header-img" src="@/assets/icons/login-icon.png" alt=""/>
+              <p>login</p>
+            </Button>
+          </MenubarItem>
           <MenubarItem>
             <Button variant="ghost" @click="handleViewChanged('acoustic')">
               <img class="header-img" src="@/assets/icons/acoustic-icon.png" alt=""/>
@@ -40,6 +56,15 @@ const { handleViewChanged } = useNavigation()
             <Button variant="ghost" @click="handleViewChanged('etc')">
               <img class="header-img" src="@/assets/icons/peek-icon.png" alt=""/>
               <p>etc</p>
+            </Button>
+          </MenubarItem>
+          <MenubarItem>
+            <Button
+                v-if="userStore.isLoggedIn"
+                variant="ghost"
+                @click=handleLogout>
+              <img class="header-img" src="@/assets/icons/logout-icon.png" alt=""/>
+              <p>logout</p>
             </Button>
           </MenubarItem>
         </MenubarContent>

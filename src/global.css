@@ -21,11 +21,11 @@
 }
 
 .menu {
-      @apply hidden sm:flex sm:gap-4 lg:flex lg:gap-6
+      @apply hidden sm:hidden lg:flex lg:gap-6
 }
 
 .menu-bar {
-      @apply block sm:hidden lg:hidden
+      @apply block sm:block lg:hidden
 }
 
 /*footer*/
