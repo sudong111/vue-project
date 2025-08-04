@@ -1,48 +1,42 @@
+import { computed } from 'vue';
 import { defineStore } from 'pinia';
+import { useStorage } from '@vueuse/core'
 
-export const useUserStore = defineStore('user', {
-    state: () => ({
-        token: null as string | null,
-        username: null as string | null,
-    }),
-    getters: {
-        // 토큰 존재 여부로 로그인 상태 판단
-        isLoggedIn: (state) => !!state.token,
-    },
+export const useUserStore = defineStore('user', () => {
+    const token = useStorage('user-token', null)
+    const username = useStorage('user-username', null)
 
-    actions: {
-        async login(username: string, password: string){
-            try {
-                const response = await fetch('http://localhost:8080/api/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({username, password})
-                })
+    const isLoggedIn = computed(() => !!token.value);
 
-                if(response.ok) {
-                    const user = await response.json();
+    const login = async (inputUsername: string, password: string) => {
+        try {
+            const response = await fetch('http://localhost:8080/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username: inputUsername, password })
+            });
 
-                    this.token = user.token;
-                    this.username = user.username;
-
-                    return { isSuccess: true, message: "done" };
-                }
-                else {
-                    const errorText = await response.text();
-                    return { isSuccess: false, message: errorText };
-                }
+            if (response.ok) {
+                const user = await response.json();
+                token.value = user.token;
+                username.value = user.username;
+                return { isSuccess: true, message: "로그인 성공" };
+            } else {
+                const errorText = await response.text();
+                return { isSuccess: false, message: errorText };
             }
-            catch (error) {
-                console.log(error)
-                return { isSuccess: false, message: 'network error' };
-            }
-        },
-        logout() {
-            this.token = null;
-            this.username = null;
-        },
-    },
-    persist: true,
+        } catch (error) {
+            console.log(error);
+            return { isSuccess: false, message: '네트워크 오류' };
+        }
+    };
+
+    const logout = () => {
+        token.value = null;
+        username.value = null;
+    };
+
+    return { token, username, isLoggedIn, login, logout };
 });
