@@ -8,13 +8,20 @@ import {useNavigation} from "@/utils/navigation.ts";
 import {useUserStore} from "@/stores/user.ts";
 import { useValidation, required, minLength, maxLength, isStrongPassword } from "@/utils/validation.ts";
 import Alert from "@/components/alert.vue";
+import { type AlertVariants } from '@/components/ui/alert';
 
 const username = ref('')
 const password = ref('')
 const { handleViewChanged } = useNavigation();
 const userStore = useUserStore();
 const { validateField, validationErrors, isFormValid } = useValidation();
-const alertInfo = ref({
+
+const alertInfo = ref<{
+  show: boolean;
+  variant: AlertVariants['variant'];
+  title: string;
+  description: string;
+}>({
   show: false,
   variant: 'default',
   title: '',
@@ -52,8 +59,6 @@ const login = async () => {
     };
   }
 }
-
-
 </script>
 
 <template>
@@ -70,23 +75,27 @@ const login = async () => {
                 :description="alertInfo.description"
                 @close="hideAlert"
             />
-            <Input
-                placeholder="id"
-                v-model="username"
-                :class="{ 'border-destructive': validationErrors.id }"
-                @focus="clearValidationError('id')"
-                @input="clearValidationError('id')"
-            ></Input>
-            <p v-if="validationErrors.id" class="text-red-500 text-sm">{{ validationErrors.id }}</p>
-            <Input
-                type="password"
-                placeholder="password"
-                v-model="password"
-                :class="{ 'border-destructive': validationErrors.password }"
-                @focus="clearValidationError('password')"
-                @input="clearValidationError('password')"
-            ></Input>
-            <p v-if="validationErrors.password" class="text-red-500 text-sm">{{ validationErrors.password }}</p>
+            <div>
+              <Input
+                  placeholder="id"
+                  v-model="username"
+                  :class="{ 'border-destructive': validationErrors.id }"
+                  @focus="clearValidationError('id')"
+                  @input="clearValidationError('id')"
+              ></Input>
+              <p v-if="validationErrors.id" class="text-red-500 text-sm">{{ validationErrors.id }}</p>
+            </div>
+            <div>
+              <Input
+                  type="password"
+                  placeholder="password"
+                  v-model="password"
+                  :class="{ 'border-destructive': validationErrors.password }"
+                  @focus="clearValidationError('password')"
+                  @input="clearValidationError('password')"
+              ></Input>
+              <p v-if="validationErrors.password" class="text-red-500 text-sm">{{ validationErrors.password }}</p>
+            </div>
             <div class="flex justify-between w-full">
               <div class="flex gap-1 items-center">
                 <Label class="hover:underline" @click="handleViewChanged('sign-up')">회원 가입</Label>

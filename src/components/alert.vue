@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Alert, AlertDescription, AlertTitle, type AlertVariants } from "@/components/ui/alert"
 import {Button} from "@/components/ui/button";
 
 const props = defineProps({
   variant: {
-    type: String,
+    type: String as () => AlertVariants['variant'],
     default: 'default',
   },
   title: {
