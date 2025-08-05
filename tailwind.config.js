@@ -8,7 +8,7 @@ export default {
   theme: {
   	extend: {
 		fontFamily: {
-			sans: ['"Libertinus Sans"', 'sans-serif'],
+			sans: ['"Asta Sans"', 'sans-serif'],
 		},
   		borderRadius: {
   			lg: 'var(--radius)',
