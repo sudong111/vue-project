@@ -39,7 +39,7 @@
 }
 
 .view-wrapper {
-      @apply flex flex-col items-center w-full gap-20
+      @apply flex flex-col items-center w-full gap-20 lg:gap-40
 }
 
 /*login & sign-up*/
@@ -71,8 +71,21 @@
 }
 
 /*nomination*/
-.nomination {
-    @apply flex justify-center w-full h-full
+.nomination-text-container {
+    @apply flex flex-col flex-nowrap justify-center items-center
+}
+
+.nomination-text {
+    @apply text-xs sm:text-base lg:text-xl
+}
+
+.scrolled .initial-state {
+    @apply opacity-100 translate-y-0;
+}
+
+/*products*/
+.product-text {
+    @apply text-xs
 }
 
 @layer base {
