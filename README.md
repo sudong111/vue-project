@@ -14,7 +14,11 @@ Vue.js typeScript, Java Spring 으로 구성된 기타 쇼핑몰입니다.
 ---
 # 홈화면
 
+반응형 웹으로 만들기 위해 애니매이션을 추가했습니다.
+
 <img width="1907" height="904" alt="image" src="https://github.com/user-attachments/assets/9a16bd8e-8353-4d1d-9465-33ab7b68427a" />
+<img width="1904" height="920" alt="image" src="https://github.com/user-attachments/assets/62ec7836-fca7-441f-9418-daa7756d022c" />
+<img width="1907" height="918" alt="image" src="https://github.com/user-attachments/assets/3db8d9f8-c05e-463f-af04-6f3352c4cb3b" />
 
 
 ---
