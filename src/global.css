@@ -30,7 +30,33 @@
 
 /*footer*/
 .footer {
+    @apply text-white bg-[#121212] mt-20 lg:mt-40 w-full
+}
 
+.footer-inner {
+    @apply relative mx-5 lg:mx-20
+}
+
+.footer-content {
+    @apply flex w-full py-10
+}
+
+.footer-title {
+    @apply text-sm lg:text-xl font-bold
+}
+
+.footer-text {
+    @apply text-xs lg:text-sm font-light
+}
+
+/*text*/
+
+.title {
+    @apply text-xl sm:text-2xl lg:text-4xl font-semibold select-none
+}
+
+.desc {
+    @apply text-sm sm:text-xl lg:text-2xl select-none
 }
 
 /*views*/
@@ -39,7 +65,7 @@
 }
 
 .view-wrapper {
-      @apply flex flex-col items-center w-full gap-20
+      @apply flex flex-col items-center w-full gap-20 lg:gap-40
 }
 
 /*login & sign-up*/
@@ -71,8 +97,41 @@
 }
 
 /*nomination*/
-.nomination {
-    @apply flex justify-center w-full h-full
+.home-content-wrapper {
+    @apply flex flex-col items-center w-full gap-8 lg:gap-16 px-5
+}
+
+.home-content-container {
+    @apply flex gap-4 sm:gap-8 lg:gap-16 lg:w-[60rem]
+}
+
+.nomination-text {
+    @apply text-xs sm:text-base lg:text-xl
+}
+
+.img-div {
+    @apply flex flex-col items-center gap-2 select-none
+}
+
+.img-text {
+    @apply text-xs sm:text-base lg:text-xl
+}
+
+.hover-up {
+    @apply transition-transform duration-300 hover:-translate-y-2
+}
+
+/*products*/
+.product-text-container {
+    @apply flex flex-col flex-nowrap justify-center items-center
+}
+
+.product-category {
+    @apply text-xs font-semibold
+}
+
+.product-title {
+    @apply text-xs
 }
 
 @layer base {
@@ -182,3 +241,27 @@
     @apply border-border;}
   body {
     @apply bg-background text-foreground font-sans;}}
+
+@keyframes bounceLoop {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* 초기 상태: 숨겨진 상태 */
+.bounce-fade-hidden {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* 등장 후 bounce만 반복하는 상태 */
+.bounce-fade-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    animation: bounceLoop 1.5s ease-in-out infinite;
+}
