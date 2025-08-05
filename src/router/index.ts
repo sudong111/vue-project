@@ -6,7 +6,6 @@ import Base from '@/views/base.vue'
 import Etc from "@/views/etc.vue";
 import Login from '@/views/login.vue'
 import SignUp from '@/views/sign-up.vue'
-import User from '@/views/user.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,11 +45,6 @@ const router = createRouter({
       name: 'sign-up',
       component: SignUp
     },
-    {
-      path: '/user',
-      name: 'user',
-      component: User
-    }
   ],
 })
 

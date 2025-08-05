@@ -14,6 +14,7 @@ import {
   isSameValue
 } from "@/utils/validation.ts";
 import {useNavigation} from "@/utils/navigation.ts";
+import {useUserStore} from "@/stores/user.ts";
 import Alert from "@/components/alert.vue";
 import { type AlertVariants } from '@/components/ui/alert';
 
@@ -23,6 +24,7 @@ const password = ref('')
 const password_check = ref('')
 const email = ref('')
 const { handleViewChanged } = useNavigation();
+const userStore = useUserStore();
 const { validateField, validationErrors, isFormValid } = useValidation();
 const duplicationMessage = ref({
   text: '',
@@ -52,44 +54,23 @@ const duplication = async () => {
     return;
   }
 
-  try {
-    const response = await fetch('http://localhost:8080/api/user/duplication', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({username: username.value})
-    })
+  const result = await userStore.userDuplicationChecked(username.value);
 
-    if(response.ok) {
-      const responseText = await response.text();
-      duplicationMessage.value = {
-        text: responseText,
-        color: 'green'
-      }
-      isDuplicationChecked.value = true;
-      clearValidationError('id');
+  if(result.isSuccess) {
+    duplicationMessage.value = {
+      text: result.message,
+      color: 'text-green-500'
     }
-
-    else {
-      const responseText = await response.text();
-      duplicationMessage.value = {
-        text: responseText,
-        color: 'red'
-      }
-      isDuplicationChecked.value = false;
-      clearValidationError('id');
-    }
+    isDuplicationChecked.value = true;
+    clearValidationError('id');
   }
-  catch (error) {
-    console.error('Login failed:', error)
-    alertInfo.value = {
-      show: true,
-      variant: 'destructive',
-      title: '로그인 실패',
-      description: '네트워크 오류로 인해 로그인에 실패하였습니다. ' + error,
-    };
+  else {
+    duplicationMessage.value = {
+      text: result.message,
+      color: 'text-red-500'
+    }
     isDuplicationChecked.value = false;
+    clearValidationError('id');
   }
 }
 
@@ -106,50 +87,25 @@ const signUp = async () => {
   if(!isDuplicationChecked.value) {
     duplicationMessage.value = {
       text: "아이디 중복을 수행하지 않았습니다.",
-      color: 'red'
+      color: 'text-red-500'
     }
     clearValidationError('id');
     return;
   }
 
-  const signupPayload = {
-    username: username.value,
-    password: password.value,
-    email: email.value
-  }
+  const result = await userStore.signup(username.value, password.value, email.value);
 
-  try {
-    const response = await fetch('http://localhost:8080/api/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(signupPayload)
-    })
-
-    if(response.ok) {
-      handleViewChanged("/");
-    }
-    else {
-      const errorText = await response.text()
-      alertInfo.value = {
-        show: true,
-        variant: 'destructive',
-        title: '회원가입 실패',
-        description: errorText,
-      };
-    }
+  if(result.isSuccess) {
+    handleViewChanged("/");
   }
-  catch (error) {
-    console.error('Login failed:', error)
+  else {
     alertInfo.value = {
       show: true,
       variant: 'destructive',
-      title: '로그인 실패',
-      description: '네트워크 오류로 인해 로그인에 실패하였습니다. ' + error,
+      title: '회원가입 실패',
+      description: result.message,
     };
   }
-
 }
 
 const clearValidationError = (fieldName: string) => {
@@ -193,7 +149,7 @@ const clearDuplication = () => {
                 <Button type="button" variant="outline" class="ml-2" @click="duplication">중복 확인</Button>
               </div>
               <p v-if="validationErrors.id" class="text-red-500 text-sm">{{ validationErrors.id }}</p>
-              <p v-if="duplicationMessage.text" :class="`text-${duplicationMessage.color}-500 text-sm`">
+              <p v-if="duplicationMessage.text" :class="`${duplicationMessage.color} text-sm`">
                 {{ duplicationMessage.text }}
               </p>
             </div>
