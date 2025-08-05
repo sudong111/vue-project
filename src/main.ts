@@ -1,6 +1,8 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import scrollFade from './directives/scrollFade.ts';
+import scrollBounce from './directives/bounce.ts';
 
 import App from './App.vue'
 import router from './router'
@@ -13,5 +15,7 @@ pinia.use(piniaPluginPersistedstate)
 
 app.use(pinia)
 app.use(router)
+app.directive('scroll-fade', scrollFade)
+app.directive('scroll-bounce', scrollBounce)
 
 app.mount('#app')

@@ -33,6 +33,16 @@
 
 }
 
+/*text*/
+
+.title {
+    @apply text-xl sm:text-2xl lg:text-4xl font-semibold select-none
+}
+
+.desc {
+    @apply text-sm sm:text-xl lg:text-2xl select-none
+}
+
 /*views*/
 .view {
       @apply grow h-full
@@ -79,8 +89,12 @@
     @apply text-xs sm:text-base lg:text-xl
 }
 
-.scrolled .initial-state {
-    @apply opacity-100 translate-y-0;
+.img-div {
+    @apply flex flex-col items-center gap-2 select-none
+}
+
+.img-text {
+    @apply text-xs sm:text-base lg:text-xl
 }
 
 /*products*/
@@ -195,3 +209,27 @@
     @apply border-border;}
   body {
     @apply bg-background text-foreground font-sans;}}
+
+@keyframes bounceLoop {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* 초기 상태: 숨겨진 상태 */
+.bounce-fade-hidden {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* 등장 후 bounce만 반복하는 상태 */
+.bounce-fade-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    animation: bounceLoop 1.5s ease-in-out infinite;
+}

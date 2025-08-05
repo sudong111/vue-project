@@ -4,7 +4,7 @@
 
 <template>
   <div class="flex flex-col items-center gap-4 lg:gap-8 mx-10">
-    <p class="text-xl sm:text-2xl lg:text-4xl font-semibold">가장 많이 팔린 제품들이에요</p>
+    <p v-scroll-fade class="text-xl sm:text-2xl lg:text-4xl font-semibold">가장 많이 팔린 제품들이에요</p>
     <div class="flex items-center gap-4 sm:gap-8 lg:gap-16 lg:w-[40rem]">
       <div class="flex flex-col">
         <img src="@/assets/acoustic/49622_acoustic_Godin-Nylon.jpg" alt="" />
