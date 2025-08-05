@@ -81,8 +81,12 @@
 }
 
 /*nomination*/
-.nomination-text-container {
-    @apply flex flex-col flex-nowrap justify-center items-center
+.home-content-wrapper {
+    @apply flex flex-col items-center w-full gap-8 lg:gap-16 px-5
+}
+
+.home-content-container {
+    @apply flex gap-4 sm:gap-8 lg:gap-16 lg:w-[60rem]
 }
 
 .nomination-text {
@@ -97,8 +101,20 @@
     @apply text-xs sm:text-base lg:text-xl
 }
 
+.hover-up {
+    @apply transition-transform duration-300 hover:-translate-y-2
+}
+
 /*products*/
-.product-text {
+.product-text-container {
+    @apply flex flex-col flex-nowrap justify-center items-center
+}
+
+.product-category {
+    @apply text-xs font-semibold
+}
+
+.product-title {
     @apply text-xs
 }
 
