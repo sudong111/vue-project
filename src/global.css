@@ -30,7 +30,23 @@
 
 /*footer*/
 .footer {
+    @apply text-white bg-[#121212] mt-20 lg:mt-40 w-full
+}
 
+.footer-inner {
+    @apply relative mx-5 lg:mx-20
+}
+
+.footer-content {
+    @apply flex w-full py-10
+}
+
+.footer-title {
+    @apply text-sm lg:text-xl font-bold
+}
+
+.footer-text {
+    @apply text-xs lg:text-sm font-light
 }
 
 /*text*/
