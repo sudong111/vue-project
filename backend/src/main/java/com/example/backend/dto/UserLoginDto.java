@@ -5,13 +5,14 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-// UserDto는 모든 요청에 사용됩니다.
 @Getter
 @Setter
-public class UserDto {
+public class UserLoginDto {
 
     // 회원가입, 로그인에 필요 (아이디)
     @NotBlank(groups = {ValidationGroups.LoginGroup.class, ValidationGroups.SignUpGroup.class}, message = "아이디는 필수 입력값입니다.")

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mapper.GuitarMapper">
+
+    <!-- name 과 brand 로 기타를 찾는 쿼리 -->
+    <select id="findByNameAndBrand" resultType="com.example.backend.model.Guitar">
+        SELECT *
+        FROM guitar
+        WHERE name = #{name} AND brand = #{brand}
+    </select>
+
+    <insert id="insertGuitar" parameterType="com.example.dto.GuitarDto">
+        INSERT INTO guitar (name, subtype_id, brand, price, image_url, description, stock, created_at, updated_at)
+        VALUES (#{name}, #{subtype_id}, #{brand}, #{price}, #{image_url}, #{description}, #{created_at}, #{updated_at})
+    </insert>
+
+</mapper>
