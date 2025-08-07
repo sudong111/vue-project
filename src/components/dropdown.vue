@@ -7,6 +7,9 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { computed } from 'vue'
+import {useNavigation} from "@/utils/navigation.ts";
+
+const { handleViewChanged } = useNavigation()
 
 const props = defineProps<{
   type: string
@@ -49,7 +52,7 @@ const menuItems = computed(() => {
       <DropdownMenuItem
           v-for="item in menuItems"
           :key="item.value"
-          @click="$emit('select', item.value)"
+          @click="handleViewChanged('products')"
       >
         {{ item.label }}
       </DropdownMenuItem>

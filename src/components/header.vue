@@ -46,7 +46,7 @@ const handleDropDownChanged = (type: string) => {
               </Button>
             </template>
           </Dropdown>
-          <Button variant="ghost" @click="handleViewChanged('base')">
+          <Button variant="ghost" @click="handleViewChanged('products')">
             <img class="header-img" src="@/assets/icons/base-icon.png" alt=""/>
             <p class="header-button-text">base</p>
           </Button>
