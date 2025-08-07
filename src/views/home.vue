@@ -8,7 +8,9 @@
   <div class="view">
     <div class="view-wrapper">
       <Carousel />
+      <div class="flex justify-center">
       <img v-scroll-bounce class="w-[3rem] lg:w-[5rem]" src="@/assets/icons/arrow-icon.png" alt="" />
+      </div>
       <Nomination />
       <Suggestion />
     </div>

@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import MenuBar from '@/components/menu-bar.vue'
+import Dropdown from '@/components/dropdown.vue'
 import { useNavigation } from "@/utils/navigation"
 import { useUserStore } from "@/stores/user"
 
@@ -12,6 +14,10 @@ const handleLogout = () => {
   userStore.logout();
   handleViewChanged('/');
 };
+
+const handleDropDownChanged = (type: string) => {
+  console.log('선택된 뷰:', type)
+}
 
 </script>
 
@@ -24,22 +30,34 @@ const handleLogout = () => {
           <p class="header-button-text">home</p>
         </Button>
         <div class="menu">
-          <Button variant="ghost" @click="handleViewChanged('acoustic')">
-            <img class="header-img" src="@/assets/icons/acoustic-icon.png" alt=""/>
-            <p class="header-button-text">acoustic</p>
-          </Button>
-          <Button variant="ghost" @click="handleViewChanged('electric')">
-            <img class="header-img" src="@/assets/icons/electric-icon.png" alt=""/>
-            <p class="header-button-text">electric</p>
-          </Button>
-          <Button variant="ghost" @click="handleViewChanged('base')">
+          <Dropdown type="acoustic" @select="handleDropDownChanged">
+            <template #trigger>
+              <Button variant="ghost">
+                <img class="header-img" src="@/assets/icons/acoustic-icon.png" alt="" />
+                <p class="header-button-text">acoustic</p>
+              </Button>
+            </template>
+          </Dropdown>
+          <Dropdown type="electric" @select="handleDropDownChanged">
+            <template #trigger>
+              <Button variant="ghost">
+                <img class="header-img" src="@/assets/icons/electric-icon.png" alt="" />
+                <p class="header-button-text">electric</p>
+              </Button>
+            </template>
+          </Dropdown>
+          <Button variant="ghost" @click="handleViewChanged('products')">
             <img class="header-img" src="@/assets/icons/base-icon.png" alt=""/>
             <p class="header-button-text">base</p>
           </Button>
-          <Button variant="ghost" @click="handleViewChanged('etc')">
-            <img class="header-img" src="@/assets/icons/peek-icon.png" alt=""/>
-            <p class="header-button-text">etc</p>
-          </Button>
+          <Dropdown type="etc" @select="handleDropDownChanged">
+            <template #trigger>
+              <Button variant="ghost">
+                <img class="header-img" src="@/assets/icons/peek-icon.png" alt="" />
+                <p class="header-button-text">etc</p>
+              </Button>
+            </template>
+          </Dropdown>
         </div>
       </div>
       <div class="flex gap-4 sm:w-[15rem] md:w-[25rem] lg:w-[30rem]">

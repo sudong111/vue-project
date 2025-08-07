@@ -71,7 +71,3 @@ const { handleViewChanged } = useNavigation();
     <CarouselNext />
   </Carousel>
 </template>
-
-<style scoped>
-
-</style>
