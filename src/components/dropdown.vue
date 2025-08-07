@@ -37,6 +37,11 @@ const menuItems = computed(() => {
         { label: 'Amp', value: 'etc-amp' },
         { label: 'pick', value: 'etc-pick' },
       ]
+    case 'user':
+      return [
+        { label: '내 정보', value: 'my-info' },
+        { label: '제품 관리', value: 'product-control' }
+      ]
     default:
       return []
   }

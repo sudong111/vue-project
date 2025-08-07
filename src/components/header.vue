@@ -60,9 +60,14 @@ const handleDropDownChanged = (type: string) => {
           </Dropdown>
         </div>
       </div>
-      <div class="flex gap-4 sm:w-[15rem] md:w-[25rem] lg:w-[30rem]">
+      <div class="flex gap-4">
         <Input class="w-full" placeholder="search"></Input>
         <div class="menu">
+          <Button
+              v-if="userStore.isAdmin"
+              variant="submit"
+              @click="handleViewChanged('management')">제품 관리
+          </Button>
           <Button  v-if="!userStore.isLoggedIn"
                    variant="ghost"
                    @click="handleViewChanged('login')">login

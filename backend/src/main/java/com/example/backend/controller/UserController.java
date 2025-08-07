@@ -1,7 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.dto.ResponseDto;
-import com.example.backend.dto.UserDto;
+import com.example.backend.dto.UserLoginDto;
 import com.example.backend.dto.LoginResponseDto;
 import com.example.backend.model.User;
 import com.example.backend.service.UserService;
@@ -32,7 +32,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(
             @Validated(ValidationGroups.LoginGroup.class)
-            @RequestBody UserDto user) {
+            @RequestBody UserLoginDto user) {
 
         ResponseDto<User> authenticatedUser = userService.authenticate(user.getUsername(), user.getPassword());
 
@@ -43,6 +43,7 @@ public class UserController {
                     .token(jwtToken)
                     .expiresIn(jwtTokenProvider.getTokenValidityInMilliseconds())
                     .username(authenticatedUser.getData().getUsername())
+                    .isAdmin(authenticatedUser.getData().getAuthority().equals("admin"))
                     .build();
 
             return ResponseEntity.ok(response);

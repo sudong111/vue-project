@@ -5,6 +5,7 @@ import { useStorage } from '@vueuse/core'
 export const useUserStore = defineStore('user', () => {
     const token = useStorage('user-token', '')
     const username = useStorage('user-username', '')
+    const isAdmin = useStorage('user-authority', false)
 
     const isLoggedIn = computed(() => !!token.value);
 
@@ -19,9 +20,11 @@ export const useUserStore = defineStore('user', () => {
             });
 
             if (response.ok) {
+                console.log("test")
                 const user = await response.json();
                 token.value = user.token;
                 username.value = user.username;
+                isAdmin.value = user.isAdmin;
                 return { isSuccess: true, message: "로그인 성공" };
             } else {
                 const errorText = await response.text();
@@ -36,6 +39,7 @@ export const useUserStore = defineStore('user', () => {
     const logout = () => {
         token.value = null;
         username.value = null;
+        isAdmin.value = false;
     };
 
     const signup = async (inputUsername: string, password: string, email: string) => {
@@ -89,5 +93,5 @@ export const useUserStore = defineStore('user', () => {
         }
     }
 
-    return { token, username, isLoggedIn, login, logout, signup, userDuplicationChecked };
+    return { token, username, isLoggedIn, isAdmin, login, logout, signup, userDuplicationChecked };
 });

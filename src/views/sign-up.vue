@@ -125,7 +125,7 @@ const clearDuplication = () => {
 <template>
   <div class="view">
     <div class="view-wrapper">
-      <div class="mt-20">
+      <div class="flex justify-center mt-20">
         <Card class="form-card">
           <form class="flex flex-col w-full gap-6" @submit.prevent="signUp" novalidate>
             <Label class="font-bold text-xl">회원가입</Label>
