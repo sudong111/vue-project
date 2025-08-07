@@ -8,7 +8,7 @@
     <div class="home-content-container">
       <div v-scroll-fade>
         <div class="img-div hover-up">
-          <img src="@/assets/acoustic/49622_acoustic_Godin-Nylon.jpg" alt="" />
+          <img src="../assets/acoustic/nylon/1_acoustic_nylon_Godin-Nylon.jpg" alt="" />
           <div class="product-text-container">
             <p class="product-category">[acoustic]</p>
             <p class="product-title">Godin-Nylon</p>
@@ -19,7 +19,7 @@
       <div>
         <div v-scroll-fade>
           <div class="img-div hover-up">
-            <img src="@/assets/acoustic/50147_acoustic_Metropolis-LR.jpg" alt="" />
+            <img src="../assets/acoustic/nylon/4_acoustic_nylon_Metropolis-LR.jpg" alt="" />
             <div class="product-text-container">
               <p class="product-category">[acoustic]</p>
               <p class="product-title">Metropolis-LR</p>
@@ -30,7 +30,7 @@
       </div>
       <div v-scroll-fade>
         <div class="img-div hover-up">
-          <img src="../assets/acoustic/51793_acoustic_Arena-EQ.jpg" alt="" />
+          <img src="../assets/acoustic/nylon/5_acoustic_nylon_Arena-EQ.jpg" alt="" />
           <div class="product-text-container">
             <p class="product-category">[acoustic]</p>
             <p class="product-title">Arena-EQ</p>
@@ -42,7 +42,7 @@
     <div class="home-content-container">
       <div v-scroll-fade>
         <div class="img-div hover-up">
-          <img src="@/assets/acoustic/49660_acoustic_Concert-Left.jpg" alt="" />
+          <img src="../assets/acoustic/nylon/2_acoustic_nylon_Concert-Left.jpg" alt="" />
           <div class="product-text-container">
             <p class="product-category">[acoustic]</p>
             <p class="product-title">Concert-Left</p>
@@ -53,7 +53,7 @@
       <div>
         <div v-scroll-fade>
           <div class="img-div hover-up">
-            <img src="@/assets/acoustic/49691_acoustic_Etude.jpg" alt="" />
+            <img src="../assets/acoustic/nylon/3_acoustic_nylon_Etude.jpg" alt="" />
             <div class="product-text-container">
               <p class="product-category">[acoustic]</p>
               <p class="product-title">Etude</p>
@@ -64,7 +64,7 @@
       </div>
       <div v-scroll-fade>
         <div class="img-div hover-up">
-          <img src="../assets/acoustic/52851_acoustic_Arena_Pro_Ltd.jpg" alt="" />
+          <img src="../assets/acoustic/nylon/6_acoustic_nylon_Arena_Pro_Ltd.jpg" alt="" />
           <div class="product-text-container">
             <p class="product-category">[acoustic]</p>
             <p class="product-title">Arena_Pro_Ltd</p>

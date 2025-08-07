@@ -51,7 +51,7 @@ const handleSearchClicked = () => {
         <p class="text">모든 지역 무료 배송 및 당일 배송을 원칙으로 합니다.</p>
         <p class="text">부담없이 선택하시고 골라보세요!</p>
       </div>
-      <div class="flex flex-col sm:flex-row lg: flex-row gap-4 mx-5 sm:mx-10 lg:mx-20">
+      <div class="flex flex-col sm:flex-row lg:flex-row gap-4 mx-5 sm:mx-10 lg:mx-20">
         <div class="flex gap-4">
           <div>
             <p>기타 종류</p>
@@ -74,6 +74,18 @@ const handleSearchClicked = () => {
             variant="submit"
             @click="handleSearchClicked"
           >검색</Button>
+        </div>
+      </div>
+      <div class="flex w-full flex-wrap gap-3 sm:gap-5 lg:gap-10">
+        <div>
+          <div class="product-img hover-up">
+            <img src="../assets/acoustic/nylon/1_acoustic_nylon_Godin-Nylon.jpg" alt="" />
+            <div class="product-text-container">
+              <p class="product-category">[acoustic]</p>
+              <p class="product-title">Godin-Nylon</p>
+              <p class="product-title">324,000</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
