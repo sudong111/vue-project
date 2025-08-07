@@ -12,7 +12,7 @@
         WHERE name = #{name} AND brand = #{brand}
     </select>
 
-    <insert id="insertGuitar" parameterType="com.example.dto.GuitarDto">
+    <insert id="insertGuitar" keyProperty="id">
         INSERT INTO guitar (name, subtype_id, brand, price, image_url, description, stock, created_at, updated_at)
         VALUES (#{name}, #{subtype_id}, #{brand}, #{price}, #{image_url}, #{description}, #{created_at}, #{updated_at})
     </insert>

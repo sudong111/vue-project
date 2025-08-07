@@ -43,6 +43,7 @@ public class UserController {
                     .token(jwtToken)
                     .expiresIn(jwtTokenProvider.getTokenValidityInMilliseconds())
                     .username(authenticatedUser.getData().getUsername())
+                    .isAdmin(authenticatedUser.getData().getAuthority().equals("admin"))
                     .build();
 
             return ResponseEntity.ok(response);
