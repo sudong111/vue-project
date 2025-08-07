@@ -16,6 +16,7 @@ const props = defineProps({
     required: true,
   },
 })
+
 const emit = defineEmits(['close']);
 
 const closeAlert = () => {
