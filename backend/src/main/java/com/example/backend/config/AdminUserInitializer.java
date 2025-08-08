@@ -13,7 +13,7 @@ public class AdminUserInitializer {
     /**
      * 애플리케이션 시작 시 실행되는 CommandLineRunner 빈을 정의합니다.
      * 이 빈은 UserRepository와 PasswordEncoder를 주입받아 초기 관리자 계정을 생성합니다.
-     * @param userRepository 사용자 정보를 관리하는 리포지토리
+     * @param userRepository 사용자 정보를 관리하는 레포지토리
      * @param passwordEncoder 비밀번호 암호화 도구
      * @return CommandLineRunner 인스턴스
      */

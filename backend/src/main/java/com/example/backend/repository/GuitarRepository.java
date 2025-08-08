@@ -2,7 +2,6 @@ package com.example.backend.repository;
 
 
 import com.example.backend.model.Guitar;
-import com.example.backend.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

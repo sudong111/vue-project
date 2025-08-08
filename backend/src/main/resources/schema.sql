@@ -9,12 +9,12 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS guitar_categories
 (
-    id           INT PRIMARY KEY,
+    id           SERIAL PRIMARY KEY,
     name         VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS  guitar_subtypes (
-    id INT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     category_id INT NOT NULL,
     name VARCHAR(50) NOT NULL,
     FOREIGN KEY (category_id) REFERENCES guitar_categories(id)
