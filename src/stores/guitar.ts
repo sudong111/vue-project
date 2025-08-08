@@ -46,6 +46,28 @@ export const useGuitarStore = defineStore('guitar', () => {
         }
     }
 
+    const insertGuitar = async (data: FormData ) => {
+        try {
+            const response = await fetch('http://localhost:8080/api/guitar/insert', {
+                method: 'POST',
+                body: data
+            });
 
-    return { categories, subtypes, selectAllCategory, selectAllSubtype };
+            if(response.ok) {
+                const text = await response.text();
+                return {isSuccess: true, message: text}
+            }
+            else {
+                const errorText = await response.text();
+                return { isSuccess: false, message: errorText };
+            }
+
+        } catch (error) {
+            console.log(error);
+            return { isSuccess: false, message: '네트워크 오류' };
+        }
+    }
+
+
+    return { categories, subtypes, selectAllCategory, selectAllSubtype, insertGuitar };
 })

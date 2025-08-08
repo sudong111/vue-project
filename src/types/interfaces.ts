@@ -24,6 +24,15 @@ export interface Validation {
     message: string;
 }
 
+export interface Guitar {
+    name: String;
+    subtype_id: number;
+    brand: String;
+    price: number;
+    description: String;
+    stock: number;
+}
+
 export interface Category {
     id: number;
     name: string;

@@ -1,6 +1,7 @@
 package com.example.backend.repository;
 
 
+import com.example.backend.dto.GuitarDto;
 import com.example.backend.model.Guitar;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -8,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface GuitarRepository {
 
-    void insertGuitar(Guitar guitar);
+    void insertGuitar(GuitarDto guitar);
 
     /**
      * name 과 brand로 기타를 찾습니다.

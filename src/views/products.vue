@@ -1,44 +1,35 @@
 <script setup lang="ts">
-import {computed, ref} from 'vue'
+import {computed, onMounted, ref, watch} from 'vue'
 import Banner from '@/components/banner.vue'
 import ListBox from '@/components/list-box.vue'
 import {Button} from "@/components/ui/button";
+import {useGuitarStore} from "@/stores/guitar.ts";
+import type {Category, Subtype} from "@/types/interfaces.ts";
 
-const guitar = [
-  { id: 1, name: 'Acoustic', unavailable: false },
-  { id: 2, name: 'Electric', unavailable: false },
-  { id: 3, name: 'Base', unavailable: false },
-  { id: 4, name: 'Etc', unavailable: true },
-]
-const guitarTypesMap: Record<string, { id: number; name: string }[]> = {
-  Acoustic: [
-    { id: 1, name: 'Nylon' },
-    { id: 2, name: 'Steel' },
-  ],
-  Electric: [
-    { id: 3, name: 'Stratocaster' },
-    { id: 4, name: 'Les Paul' },
-  ],
-  Base: [
-    { id: 5, name: 'Jazz Bass' },
-    { id: 6, name: 'Precision Bass' },
-  ],
-  Etc: [
-    { id: 7, name: 'Ukulele' },
-    { id: 8, name: 'Mandolin' },
-  ],
-}
+const guitarStore = useGuitarStore();
+const categoryList = ref<Category[]>([]);
+const subtypeList = ref<Subtype[]>([]);
+const selectedCategory = ref<Category | null>(null);
+const selectedSubtype = ref(null);
 
-const selectedGuitar = ref<typeof guitar[0] | null>(null)
-const selectedSubType = ref<any>(null)
-const subTypeOptions = computed(() => {
-  if (!selectedGuitar.value) return []
-  return guitarTypesMap[selectedGuitar.value.name] || []
-})
+const filteredSubtypes = computed(() => {
+  if (!selectedCategory.value) return [];
+  return subtypeList.value.filter(
+      (item) => item.category_id === selectedCategory.value!.id
+  );
+});
 
-const handleSearchClicked = () => {
-  console.log(selectedGuitar.value?.name ?? 'all', selectedSubType.value?.name ?? 'all')
-}
+watch(selectedCategory, () => {
+  selectedSubtype.value = null
+});
+
+
+onMounted(async () => {
+  await guitarStore.selectAllCategory();
+  await guitarStore.selectAllSubtype();
+  categoryList.value = guitarStore.categories;
+  subtypeList.value = guitarStore.subtypes;
+});
 </script>
 
 <template>
@@ -55,24 +46,24 @@ const handleSearchClicked = () => {
         <div class="flex gap-4">
           <div>
             <p>기타 종류</p>
-             <ListBox
-                 v-model="selectedGuitar"
-                 :items="guitar"
-             />
+            <ListBox
+                v-model="selectedCategory"
+                :items="categoryList"
+            />
           </div>
           <div>
             <p>세부 종류</p>
             <ListBox
-                v-model="selectedSubType"
-                :items="subTypeOptions"
-                :disabled="!selectedGuitar"
+                v-model="selectedSubtype"
+                :items="filteredSubtypes"
+                :disabled="!selectedCategory || selectedCategory.id === 3"
             />
           </div>
         </div>
         <div class="flex items-end">
           <Button
             variant="submit"
-            @click="handleSearchClicked"
+            @click=""
           >검색</Button>
         </div>
       </div>

@@ -80,7 +80,7 @@
 .form-card {
       @apply flex justify-center items-center p-4 sm:p-8 lg:p-12
       w-full h-full
-      sm:w-[30rem] sm:h-[30rem] lg:w-[40rem] lg:h-[40rem]
+      sm:w-[40rem] sm:h-[40rem] lg:w-[40rem] lg:h-[40rem]
 }
 
 /*Carousel*/

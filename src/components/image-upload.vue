@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import {ref} from "vue";
-import {Input} from "@/components/ui/input";
-import {Button} from "@/components/ui/button";
+import {ref, defineEmits} from "vue";
 
 const previewImage = ref<string | null>(null)
 const selectedFile = ref<File | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)
+const emit = defineEmits<{
+  (e: 'file-selected', file: File): void
+}>()
 
 const handleFileUpload = (event: Event) => {
   const target = event.target as HTMLInputElement
@@ -22,6 +23,8 @@ const handleFileUpload = (event: Event) => {
   reader.onload = (e) => {
     previewImage.value = e.target?.result as string
     selectedFile.value = file
+
+    emit('file-selected', file)
   }
   reader.readAsDataURL(file)
 
@@ -31,6 +34,8 @@ const handleFileUpload = (event: Event) => {
 const removeImage = () => {
   previewImage.value = null
   selectedFile.value = null
+
+  emit('file-selected', null as any)
 }
 </script>
 

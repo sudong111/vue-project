@@ -1,10 +1,12 @@
 package com.example.backend.service;
 
+import com.example.backend.dto.GuitarDto;
 import com.example.backend.model.Guitar;
 import com.example.backend.dto.ResponseDto;
 import com.example.backend.repository.GuitarCategoriesRepository;
 import com.example.backend.repository.GuitarRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class GuitarService {
@@ -15,7 +17,7 @@ public class GuitarService {
         this.guitarRepository = guitarRepository;
     }
 
-    public ResponseDto<Void> insert(Guitar guitar) {
+    public ResponseDto<Void> insert(GuitarDto guitar, MultipartFile imageFile) {
         try{
             ResponseDto<Void> result = duplication(guitar);
             if(!result.isResult()) {
@@ -29,7 +31,7 @@ public class GuitarService {
         }
     }
 
-    public ResponseDto<Void> duplication(Guitar guitar) {
+    public ResponseDto<Void> duplication(GuitarDto guitar) {
         try{
             if(guitarRepository.findByNameAndBrand(guitar.getName(),guitar.getBrand()) == null) {
                 return ResponseDto.success("등록 가능한 기타입니다.");
