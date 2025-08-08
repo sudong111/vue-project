@@ -25,11 +25,12 @@ export interface Validation {
 }
 
 export interface Guitar {
-    name: String;
+    name: string;
     subtype_id: number;
-    brand: String;
+    brand: string;
     price: number;
-    description: String;
+    image_url: string;
+    description: string;
     stock: number;
 }
 

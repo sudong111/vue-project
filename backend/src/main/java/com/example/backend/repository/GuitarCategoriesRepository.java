@@ -15,4 +15,6 @@ public interface GuitarCategoriesRepository {
 
     Category findByName(@Param("name") String name);
 
+    Category findBySubtypeId(@Param("subtype_id") int subtypeId);
+
 }

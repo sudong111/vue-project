@@ -56,6 +56,7 @@ const insert = async () => {
     subtype_id: selectedSubtype.value.id,
     brand: brand.value,
     price: price.value,
+    image_url: '',
     description: description.value,
     stock: stock.value,
   };

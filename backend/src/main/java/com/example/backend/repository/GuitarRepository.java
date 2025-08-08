@@ -5,6 +5,7 @@ import com.example.backend.dto.GuitarDto;
 import com.example.backend.model.Guitar;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.multipart.MultipartFile;
 
 @Mapper
 public interface GuitarRepository {

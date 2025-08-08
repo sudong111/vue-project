@@ -5,14 +5,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @Builder
 public class GuitarDto {
     private String name;
-    private long subtype_id;
+    private int subtype_id;
     private String brand;
-    private long price;
+    private int price;
+    private String image_url;
     private String description;
-    private long stock;
+    private int stock;
 }

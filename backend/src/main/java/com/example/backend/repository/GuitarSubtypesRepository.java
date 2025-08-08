@@ -1,7 +1,6 @@
 package com.example.backend.repository;
 
 
-import com.example.backend.model.Category;
 import com.example.backend.model.Subtype;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -16,5 +15,7 @@ public interface GuitarSubtypesRepository {
     List<Subtype> selectAll();
 
     Subtype findByName(@Param("name") String name);
+
+    Subtype findById(@Param("id") int id);
 
 }
