@@ -1,15 +1,20 @@
 package com.example.backend.repository;
 
 
-import com.example.backend.model.GuitarSubtype;
+import com.example.backend.model.Category;
+import com.example.backend.model.Subtype;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface GuitarSubtypesRepository {
 
-    void insertGuitarSubtypes(GuitarSubtype subtypes);
+    void insertGuitarSubtypes(Subtype subtypes);
 
-    GuitarSubtype findByName(@Param("name") String name);
+    List<Subtype> selectAll();
+
+    Subtype findByName(@Param("name") String name);
 
 }

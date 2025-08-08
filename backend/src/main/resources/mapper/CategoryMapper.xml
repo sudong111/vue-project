@@ -10,7 +10,11 @@
     VALUES (#{name})
     </insert>
 
-    <select id="findByName" parameterType="string" resultType="com.example.backend.model.GuitarCategory">
+    <select id="selectAll" resultType="com.example.backend.model.Category">
+        SELECT * FROM guitar_categories
+    </select>
+
+    <select id="findByName" parameterType="string" resultType="com.example.backend.model.Category">
         SELECT * FROM guitar_categories WHERE name = #{name}
     </select>
 

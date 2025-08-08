@@ -2,17 +2,16 @@ package com.example.backend.service;
 
 import com.example.backend.model.Guitar;
 import com.example.backend.dto.ResponseDto;
+import com.example.backend.repository.GuitarCategoriesRepository;
 import com.example.backend.repository.GuitarRepository;
 import org.springframework.stereotype.Service;
-
-import java.sql.SQLException;
 
 @Service
 public class GuitarService {
 
     private final GuitarRepository guitarRepository;
 
-    public GuitarService(GuitarRepository guitarRepository) {
+    public GuitarService(GuitarRepository guitarRepository, GuitarCategoriesRepository guitarCategoriesRepository) {
         this.guitarRepository = guitarRepository;
     }
 

@@ -1,7 +1,7 @@
 package com.example.backend.config;
 
-import com.example.backend.model.GuitarCategory;
-import com.example.backend.model.GuitarSubtype;
+import com.example.backend.model.Category;
+import com.example.backend.model.Subtype;
 import com.example.backend.repository.GuitarCategoriesRepository;
 import com.example.backend.repository.GuitarSubtypesRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -30,7 +30,7 @@ public class GuitarInitializer {
             for(String name : categories) {
                 if(guitarCategoriesRepository.findByName(name) == null) {
                     System.out.println("기본 카테고리를 생성합니다. 생성할 카테고리 name : " + name);
-                    GuitarCategory category = new GuitarCategory();
+                    Category category = new Category();
                     category.setName(name);
                     guitarCategoriesRepository.insertGuitarCategory(category);
                     System.out.println("기본 카테고리 생성 성공. 생성한 카테고리 name : " + name);
@@ -56,7 +56,7 @@ public class GuitarInitializer {
             subtypeMap.put(4L, Arrays.asList("amp", "peek"));
 
             for (Map.Entry<Long, List<String>> entry : subtypeMap.entrySet()) {
-                GuitarSubtype subtype = new GuitarSubtype();
+                Subtype subtype = new Subtype();
                 subtype.setCategory_id(entry.getKey());
                 List<String> subtypeNames = entry.getValue();
 

@@ -146,6 +146,10 @@
     @apply text-xs
 }
 
+.disabled-list-box {
+    @apply bg-gray-600 cursor-not-allowed
+}
+
 @layer base {
       :root {
 

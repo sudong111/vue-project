@@ -1,14 +1,18 @@
 package com.example.backend.repository;
 
-import com.example.backend.model.GuitarCategory;
+import com.example.backend.model.Category;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface GuitarCategoriesRepository {
 
-    void insertGuitarCategory(GuitarCategory category);
+    void insertGuitarCategory(Category category);
 
-    GuitarCategory findByName(@Param("name") String name);
+    List<Category> selectAll();
+
+    Category findByName(@Param("name") String name);
 
 }

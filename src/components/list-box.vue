@@ -10,25 +10,29 @@ import {
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
 
 const props = defineProps<{
-  modelValue: any
-  items: any[]
+  modelValue: any,
+  items: any[],
   disabled?: boolean
 }>()
 
-const emit = defineEmits<{
-  (e: 'update:modelValue', value: any): void
-}>()
+const emit = defineEmits(['update:modelValue'])
 
 const selected = computed({
   get: () => props.modelValue,
-  set: (value) => emit('update:modelValue', value),
+  set: (val) => emit('update:modelValue', val)
 })
 </script>
 
 <template>
   <Listbox v-model="selected" :disabled="props.disabled">
     <div class="relative w-[10rem]">
-      <ListboxButton class="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300 sm:text-sm">
+      <ListboxButton
+          :class="[
+        'relative w-full cursor-default rounded-lg py-2 pl-3 pr-10 text-left shadow-md sm:text-sm',
+        props.disabled
+          ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+          : 'bg-white text-black focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300']"
+      >
         <span class="block truncate">{{ selected?.name || '선택해주세요' }}</span>
         <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
           <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />

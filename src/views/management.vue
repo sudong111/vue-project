@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import {computed, ref} from 'vue'
+import {computed, ref, watch} from 'vue'
+import type {Category, Subtype} from '@/types/interfaces.ts'
 import {Card} from '@/components/ui/card'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
@@ -7,6 +8,33 @@ import {Button} from "@/components/ui/button";
 import ListBox from '@/components/list-box.vue'
 import ImageUpload from "@/components/image-upload.vue";
 import {Textarea} from "@/components/ui/textarea";
+import { onMounted } from "vue";
+import { useGuitarStore } from "@/stores/guitar.ts";
+
+const guitarStore = useGuitarStore();
+const categoryList = ref<Category[]>([]);
+const subtypeList = ref<Subtype[]>([]);
+const selectedCategory = ref<Category | null>(null);
+const selectedSubtype = ref(null);
+
+const filteredSubtypes = computed(() => {
+  if (!selectedCategory.value) return [];
+  return subtypeList.value.filter(
+      (item) => item.category_id === selectedCategory.value!.id
+  );
+});
+
+watch(selectedCategory, () => {
+  selectedSubtype.value = null
+});
+
+
+onMounted(async () => {
+  await guitarStore.selectAllCategory();
+  await guitarStore.selectAllSubtype();
+  categoryList.value = guitarStore.categories;
+  subtypeList.value = guitarStore.subtypes;
+});
 
 </script>
 
@@ -31,16 +59,16 @@ import {Textarea} from "@/components/ui/textarea";
               <div>
                 <p>기타 종류</p>
                 <ListBox
-                    v-model="selectedGuitar"
-                    :items="guitar"
+                    v-model="selectedCategory"
+                    :items="categoryList"
                 />
               </div>
               <div>
                 <p>세부 종류</p>
                 <ListBox
-                    v-model="selectedSubType"
-                    :items="subTypeOptions"
-                    :disabled="!selectedGuitar"
+                    v-model="selectedSubtype"
+                    :items="filteredSubtypes"
+                    :disabled="!selectedCategory || selectedCategory.id === 3"
                 />
               </div>
             </div>

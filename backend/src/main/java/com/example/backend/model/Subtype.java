@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GuitarSubtype {
+public class Subtype {
     private Long id;
     private Long category_id;
     private String name;
