@@ -1,15 +1,38 @@
-# 🚀 Guitar web
+# 🚀 Guitar web (08-02 start / 2 week plan)
 
-Vue.js typeScript, Java Spring 으로 구성된 기타 쇼핑몰입니다.
+기타 쇼핑몰 홈페이지 구현 (60% 구현 완료 / 08-16 까지 마무리 예정)
+- 반응형으로 제작했습니다. 화면의 크기에 따라 Component / layout 이 최적화됩니다.
+- 제품 검색 기능이 있습니다.
+- 로그인, 회원가입 기능이 있습니다.
+- 관리자는 제품을 등록/수정/삭제 할 수 있습니다.
+- 사용자는 제품을 장바구니에 저장할 수 있습니다(예정)
+- 제품 문의 기능이 있습니다.(예정)
 
 ---
 
 ## 🧱 기술 스택
 
+# Front-end
 -  [Vue.js](https://vuejs.org/)
 -  [TypeScript](https://www.typescriptlang.org/)
--  [Spring](https://https://spring.io/)
+-  [Pinia](https://pinia.vuejs.kr/)
 -  [Tailwind CSS](https://tailwindcss.com/)
+-  [headlessui](https://headlessui.com/)
+-  [shadcn](https://ui.shadcn.com/)
+
+# Back-end
+-  [Spring](https://https://spring.io/)
+-  [mybatis](https://blog.mybatis.org/)
+-  [RestAPI](https://restfulapi.net/)
+-  [Postman](https://www.postman.com/)
+
+# DB
+-  [PostgreSQL](https://www.postgresql.org/)
+-  [DBeaver](https://dbeaver.io/)
+
+# build
+-  [Vite](https://ko.vite.dev/)
+
 
 ---
 # 홈화면
@@ -27,8 +50,10 @@ Vue.js typeScript, Java Spring 으로 구성된 기타 쇼핑몰입니다.
 <img width="1768" height="726" alt="image" src="https://github.com/user-attachments/assets/647585cb-dc0d-4dd5-b04f-747817448468" />
 
 validation 적용
+jwt 토큰 사용
 
 <img width="594" height="602" alt="image" src="https://github.com/user-attachments/assets/ea5c2143-8822-47e1-ba14-da268fb04cb0" />
+
 
 ---
 # 회원가입 화면
