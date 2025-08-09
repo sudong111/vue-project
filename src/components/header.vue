@@ -11,7 +11,7 @@ import type {Category} from "@/types/interfaces.ts";
 import acousticIcon from '@/assets/icons/acoustic-icon.png';
 import electricIcon from '@/assets/icons/electric-icon.png';
 import baseIcon from '@/assets/icons/base-icon.png';
-import etcIcon from '@/assets/icons/peek-icon.png';
+import etcIcon from '@/assets/icons/pick-icon.png';
 
 const icons = {
   acoustic: acousticIcon,

@@ -11,7 +11,7 @@ import {
   required,
   isEmail,
   useValidation,
-  isSameValue
+  isSameValue, isSafeInput
 } from "@/utils/validation.ts";
 import {useNavigation} from "@/utils/navigation.ts";
 import {useUserStore} from "@/stores/user.ts";
@@ -48,7 +48,7 @@ const hideAlert = () => {
 };
 
 const duplication = async () => {
-  const isUsernameValid = validateField(username.value, [required, minLength(4), maxLength(50)], 'id');
+  const isUsernameValid = validateField(username.value, [required, minLength(4), maxLength(50), isSafeInput], 'id');
 
   if(!isUsernameValid) {
     return;
@@ -75,9 +75,9 @@ const duplication = async () => {
 }
 
 const signUp = async () => {
-  const isUsernameValid = validateField(username.value, [required, minLength(4), maxLength(50)], 'id');
-  const isPasswordValid = validateField(password.value, [required, isStrongPassword], 'password');
-  const isPasswordCheckValid = validateField(password_check.value, [isSameValue(password.value, 'password')], 'passwordCheck');
+  const isUsernameValid = validateField(username.value, [required, minLength(4), maxLength(50), isSafeInput], 'id');
+  const isPasswordValid = validateField(password.value, [required, isStrongPassword, isSafeInput], 'password');
+  const isPasswordCheckValid = validateField(password_check.value, [isSameValue(password.value, 'password'), isSafeInput], 'passwordCheck');
   const isEmailValid = validateField(email.value, [required, isEmail], 'email');
 
   if (!isUsernameValid || !isPasswordValid || !isPasswordCheckValid || !isEmailValid ) {

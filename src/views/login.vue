@@ -6,7 +6,7 @@ import {Label} from '@/components/ui/label'
 import {Button} from "@/components/ui/button";
 import {useNavigation} from "@/utils/navigation.ts";
 import {useUserStore} from "@/stores/user.ts";
-import { useValidation, required, minLength, maxLength, isStrongPassword } from "@/utils/validation.ts";
+import {useValidation, required, minLength, maxLength, isStrongPassword, isSafeInput} from "@/utils/validation.ts";
 import Alert from "@/components/alert.vue";
 import { type AlertVariants } from '@/components/ui/alert';
 
@@ -38,8 +38,8 @@ const clearValidationError = (fieldName: string) => {
 };
 
 const login = async () => {
-  const isUsernameValid = validateField(username.value, [required, minLength(4), maxLength(50)], 'id');
-  const isPasswordValid = validateField(password.value, [required, isStrongPassword], 'password');
+  const isUsernameValid = validateField(username.value, [required, minLength(4), maxLength(50), isSafeInput], 'id');
+  const isPasswordValid = validateField(password.value, [required, isStrongPassword, isSafeInput], 'password');
 
   if (!isUsernameValid || !isPasswordValid) {
     return;

@@ -53,7 +53,7 @@ public class GuitarInitializer {
             subtypeMap.put(1L, Arrays.asList("Nylon", "Steel"));
             subtypeMap.put(2L, Arrays.asList("Solid", "Montreal", "5th", "Mutiac"));
             // 3L은 베이스로 subtype 없음 — 안 넣음
-            subtypeMap.put(4L, Arrays.asList("amp", "peek"));
+            subtypeMap.put(4L, Arrays.asList("amp", "pick"));
 
             for (Map.Entry<Long, List<String>> entry : subtypeMap.entrySet()) {
                 Subtype subtype = new Subtype();

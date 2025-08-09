@@ -10,9 +10,12 @@ import ImageUpload from "@/components/image-upload.vue";
 import {Textarea} from "@/components/ui/textarea";
 import { onMounted } from "vue";
 import { useGuitarStore } from "@/stores/guitar.ts";
-import {useValidation} from "@/utils/validation.ts";
+import {isNull, isSafeInput, isSafeInt, maxLength, minLength, required, useValidation} from "@/utils/validation.ts";
+import {useNavigation} from "@/utils/navigation.ts";
 
 const guitarStore = useGuitarStore();
+const { handleViewChanged } = useNavigation();
+const { validateField, validationErrors, isFormValid } = useValidation();
 const name = ref('');
 const brand = ref('');
 const price = ref(0);
@@ -35,7 +38,6 @@ watch(selectedCategory, () => {
   selectedSubtype.value = null
 });
 
-
 onMounted(async () => {
   await guitarStore.selectAllCategory();
   await guitarStore.selectAllSubtype();
@@ -47,7 +49,23 @@ const handleFileSelected = (file: File) => {
   imageFile.value = file
 }
 
+const clearValidationError = (fieldName: string) => {
+  delete validationErrors.value[fieldName];
+};
+
 const insert = async () => {
+  const isNameValid = validateField(name.value, [required, minLength(4), maxLength(200), isSafeInput], 'name');
+  const isBrandValid = validateField(brand.value, [required, minLength(4), maxLength(100), isSafeInput], 'brand');
+  const isCategoryValid = validateField(selectedCategory.value, [isNull], 'category')
+  const isSubtypeValid = validateField(selectedSubtype.value, [isNull], 'subtype')
+  const isPriceValid = validateField(price.value.toString(), [required, isSafeInt, isSafeInput], 'price');
+  const isStockValid = validateField(stock.value.toString(), [required, isSafeInt, isSafeInput], 'stock');
+  const isDescriptionValid = validateField(description.value, [required, minLength(4), maxLength(1000), isSafeInput], 'description');
+
+  if(!isNameValid || !isBrandValid || !isCategoryValid || !isSubtypeValid || !isPriceValid || !isStockValid || !isDescriptionValid) {
+    return;
+  }
+
   if(selectedSubtype.value?.id == null) {
     return;
   }
@@ -82,9 +100,23 @@ const insert = async () => {
             <div class="flex relative">
                 <div class="flex flex-col gap-3 w-full mr-[10rem]">
                   <Label>제품 이름<span class="text-red-500"> *</span></Label>
-                  <Input v-model="name"></Input>
+                  <Input
+                      placeholder="name"
+                      v-model="name"
+                      :class="{ 'border-destructive': validationErrors.name }"
+                      @focus="clearValidationError('name')"
+                      @input="clearValidationError('name')"
+                  ></Input>
+                  <p v-if="validationErrors.name" class="text-red-500 text-xs">{{ validationErrors.name }}</p>
                   <Label>브랜드 명<span class="text-red-500"> *</span></Label>
-                  <Input v-model="brand"></Input>
+                  <Input
+                      placeholder="brand"
+                      v-model="brand"
+                      :class="{ 'border-destructive': validationErrors.brand }"
+                      @focus="clearValidationError('brand')"
+                      @input="clearValidationError('brand')"
+                  ></Input>
+                  <p v-if="validationErrors.brand" class="text-red-500 text-xs">{{ validationErrors.brand }}</p>
                 </div>
               <div class="absolute top-0 right-0 w-[7.5rem] h-[10rem]">
                 <ImageUpload
@@ -98,6 +130,8 @@ const insert = async () => {
                 <ListBox
                     v-model="selectedCategory"
                     :items="categoryList"
+                    :class="{ 'border-destructive border': validationErrors.category }"
+                    @click="clearValidationError('category')"
                 />
               </div>
               <div>
@@ -105,6 +139,10 @@ const insert = async () => {
                 <ListBox
                     v-model="selectedSubtype"
                     :items="filteredSubtypes"
+                    :class="{
+                      'border-destructive border': validationErrors.subtype && !(!selectedCategory || selectedCategory.id === 3)
+                    }"
+                    @click="clearValidationError('subtype')"
                     :disabled="!selectedCategory || selectedCategory.id === 3"
                 />
               </div>
@@ -112,16 +150,37 @@ const insert = async () => {
             <div class="flex w-full gap-4">
               <div class="flex w-full flex-col gap-2">
                 <Label>가격<span class="text-red-500"> *</span></Label>
-                <Input type="number" v-model="price"></Input>
+                <Input
+                    type="number"
+                    v-model="price"
+                    :class="{ 'border-destructive': validationErrors.price }"
+                    @focus="clearValidationError('price')"
+                    @input="clearValidationError('price')"
+                ></Input>
+                <p v-if="validationErrors.price" class="text-red-500 text-sm">{{ validationErrors.price }}</p>
               </div>
               <div class="flex w-full flex-col gap-2">
                 <Label>수량</Label>
-                <Input type="number" placeholder="0" v-model="stock"></Input>
+                <Input
+                    type="number"
+                    placeholder="0"
+                    v-model="stock"
+                    :class="{ 'border-destructive': validationErrors.stock }"
+                    @focus="clearValidationError('stock')"
+                    @input="clearValidationError('stock')"
+                ></Input>
+                <p v-if="validationErrors.stock" class="text-red-500 text-sm">{{ validationErrors.stock }}</p>
               </div>
             </div>
             <div>
-              <Label>설명</Label>
-              <Textarea v-model="description" />
+              <Label>설명<span class="text-red-500"> *</span></Label>
+              <Textarea
+                  v-model="description"
+                  :class="{ 'border-destructive': validationErrors.description }"
+                  @focus="clearValidationError('description')"
+                  @input="clearValidationError('description')"
+              />
+              <p v-if="validationErrors.description" class="text-red-500 text-sm">{{ validationErrors.description }}</p>
             </div>
             <Button variant="submit" type="submit">저장하기</Button>
           </form>

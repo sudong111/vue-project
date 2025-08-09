@@ -54,7 +54,7 @@ const handleLogout = () => {
           </MenubarItem>
           <MenubarItem>
             <Button variant="ghost" @click="handleViewChanged('etc')">
-              <img class="header-img" src="@/assets/icons/peek-icon.png" alt=""/>
+              <img class="header-img" src="@/assets/icons/pick-icon.png" alt=""/>
               <p>etc</p>
             </Button>
           </MenubarItem>

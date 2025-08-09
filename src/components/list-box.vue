@@ -12,7 +12,8 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
 const props = defineProps<{
   modelValue: any,
   items: any[],
-  disabled?: boolean
+  disabled?: boolean,
+  class?: string | object
 }>()
 
 const emit = defineEmits(['update:modelValue'])
@@ -31,7 +32,9 @@ const selected = computed({
         'relative w-full cursor-default rounded-lg py-2 pl-3 pr-10 text-left shadow-md sm:text-sm',
         props.disabled
           ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-          : 'bg-white text-black focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300']"
+          : 'bg-white text-black focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300',
+          props.class
+          ]"
       >
         <span class="block truncate">{{ selected?.name || 'All' }}</span>
         <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">

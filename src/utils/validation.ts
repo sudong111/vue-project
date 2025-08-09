@@ -15,7 +15,7 @@ export function useValidation() {
      * @param rules 적용할 유효성 검사 규칙 배열
      * @param fieldName 오류 메시지에 사용할 필드 이름
      */
-    const validateField = (value: string, rules: Function[], fieldName: string) => {
+    const validateField = (value: any, rules: Function[], fieldName: string) => {
         let errorMessage = '';
         let isValid = true;
 
@@ -103,6 +103,47 @@ export const isEmail = (value: string, fieldName: string): Validation => {
             message: `유효한 ${fieldName} 을 입력해주세요.`
         };
     }
+    return { isValid: true, message: '' };
+};
+
+// 숫자(0이상) 입력 규칙
+export const isSafeInt = (value: string, fieldName: string): Validation => {
+    const numberRegex = /^[0-9]{1,10}$/;
+    if (!numberRegex.test(value)) {
+        return {
+            isValid: false,
+            message: `유효한 ${fieldName} 을 입력해주세요.`
+        };
+    }
+    return { isValid: true, message: '' };
+}
+
+// null or undefined 체크
+export const isNull = (value: any, fieldName: string): Validation => {
+    if (value == null) {
+        return {
+            isValid: false,
+            message: `${fieldName}은(는) 필수 입력 항목입니다.`
+        };
+    }
+    return { isValid: true, message: '' };
+}
+
+// XSS와 SQL Injection 방지 규칙
+export const isSafeInput = (value: string, fieldName: string): Validation => {
+    // 위험한 HTML 태그 패턴 (스크립트, iframe, 이벤트 속성 등)
+    const xssPattern = /<.*?>|(&lt;.*?&gt;)|\son\w+=/gi;
+
+    // SQL Injection 의심 패턴 (예약어 + 특수문자)
+    const sqlPattern = /\b(SELECT|INSERT|UPDATE|DELETE|DROP|UNION|ALTER|CREATE|EXEC|--|#)\b|['";]/gi;
+
+    if (xssPattern.test(value) || sqlPattern.test(value)) {
+        return {
+            isValid: false,
+            message: `${fieldName}에 허용되지 않는 특수 문자나 코드가 포함되어 있습니다.`
+        };
+    }
+
     return { isValid: true, message: '' };
 };
 
