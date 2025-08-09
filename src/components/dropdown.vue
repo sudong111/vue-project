@@ -1,18 +1,17 @@
 <script setup lang="ts">
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-
-import { computed } from 'vue'
+import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu"
+import {computed, onMounted, ref} from 'vue'
 import {useNavigation} from "@/utils/navigation.ts";
+import type {Category, CategorySubtypeQuery, Subtype} from "@/types/interfaces.ts";
+import {useGuitarStore} from "@/stores/guitar.ts";
 
-const { handleViewChanged } = useNavigation()
+const { handleViewChangedWithQuery } = useNavigation()
+const guitarStore = useGuitarStore();
+const subtypeList = ref<Subtype[]>([]);
+const queryList = ref<CategorySubtypeQuery[]>([]);
 
 const props = defineProps<{
-  type: string
+  category: Category
 }>()
 
 const emit = defineEmits<{
@@ -20,32 +19,27 @@ const emit = defineEmits<{
 }>()
 
 const menuItems = computed(() => {
-  switch (props.type) {
-    case 'acoustic':
-      return [
-        { label: 'Steel', value: 'acoustic-steel' },
-        { label: 'Nylon', value: 'acoustic-nylon' },
-      ]
-    case 'electric':
-      return [
-        { label: 'Solid Body', value: 'electric-solid' },
-        { label: 'Montreal', value: 'electric-montreal' },
-        { label: '5th', value: 'electric-5th' },
-      ]
-    case 'etc':
-      return [
-        { label: 'Amp', value: 'etc-amp' },
-        { label: 'pick', value: 'etc-pick' },
-      ]
-    case 'user':
-      return [
-        { label: '내 정보', value: 'my-info' },
-        { label: '제품 관리', value: 'product-control' }
-      ]
-    default:
-      return []
-  }
-})
+  return subtypeList.value
+      .filter(subtype => subtype.category_id === props.category.id)
+      .map(subtype => ({
+        label: subtype.name,
+        value: subtype.id || subtype.name.toLowerCase()
+      }))
+});
+
+const handleClicked = (subtype : Subtype) => {
+  queryList.value = [{
+    category: props.category,
+    subtype: subtype
+  }]
+  handleViewChangedWithQuery('products', queryList.value);
+}
+
+
+onMounted(async () => {
+  await guitarStore.selectAllSubtype();
+  subtypeList.value = guitarStore.subtypes;
+});
 </script>
 
 <template>
@@ -57,7 +51,7 @@ const menuItems = computed(() => {
       <DropdownMenuItem
           v-for="item in menuItems"
           :key="item.value"
-          @click="handleViewChanged('products')"
+          @click="handleClicked(subtypeList.find(s => s.id === item.value) || { id: 0, name: '', category_id: 0 })"
       >
         {{ item.label }}
       </DropdownMenuItem>

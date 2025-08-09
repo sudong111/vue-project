@@ -33,7 +33,7 @@ const selected = computed({
           ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
           : 'bg-white text-black focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300']"
       >
-        <span class="block truncate">{{ selected?.name || '선택해주세요' }}</span>
+        <span class="block truncate">{{ selected?.name || '전체' }}</span>
         <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
           <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
         </span>

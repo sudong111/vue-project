@@ -15,5 +15,15 @@ export function useNavigation() {
         router.push(`/${view}`)
     }
 
-    return { handleViewChanged }
+    function handleViewChangedWithQuery(view: string, query: Array<any>) {
+        router.push({
+            name: `${view}`,
+            query: {
+                category_id: query[0]?.category.id,
+                subtype_id: query[0]?.subtype.id,
+            }
+        })
+    }
+
+    return { handleViewChanged, handleViewChangedWithQuery }
 }

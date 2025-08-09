@@ -45,3 +45,8 @@ export interface Subtype {
     name: string;
 }
 
+export interface CategorySubtypeQuery {
+    category : Category;
+    subtype : Subtype;
+}
+

@@ -1,23 +1,43 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import {onMounted, ref} from 'vue'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import MenuBar from '@/components/menu-bar.vue'
 import Dropdown from '@/components/dropdown.vue'
 import { useNavigation } from "@/utils/navigation"
 import { useUserStore } from "@/stores/user"
+import {useGuitarStore} from "@/stores/guitar.ts";
+import type {Category} from "@/types/interfaces.ts";
+import acousticIcon from '@/assets/icons/acoustic-icon.png';
+import electricIcon from '@/assets/icons/electric-icon.png';
+import baseIcon from '@/assets/icons/base-icon.png';
+import etcIcon from '@/assets/icons/peek-icon.png';
+
+const icons = {
+  acoustic: acousticIcon,
+  electric: electricIcon,
+  base: baseIcon,
+  etc: etcIcon,
+};
 
 const { handleViewChanged } = useNavigation()
 const userStore = useUserStore();
+const guitarStore = useGuitarStore();
+const categoryList = ref<Category[]>([]);
 
 const handleLogout = () => {
   userStore.logout();
   handleViewChanged('/');
 };
 
-const handleDropDownChanged = (type: string) => {
-  console.log('선택된 뷰:', type)
+const getIconPath = (name: string) => {
+  return icons[name as keyof typeof icons];
 }
+
+onMounted(async () => {
+  await guitarStore.selectAllCategory();
+  categoryList.value = guitarStore.categories;
+});
 
 </script>
 
@@ -30,34 +50,36 @@ const handleDropDownChanged = (type: string) => {
           <p class="header-button-text">home</p>
         </Button>
         <div class="menu">
-          <Dropdown type="acoustic" @select="handleDropDownChanged">
-            <template #trigger>
-              <Button variant="ghost">
-                <img class="header-img" src="@/assets/icons/acoustic-icon.png" alt="" />
-                <p class="header-button-text">acoustic</p>
-              </Button>
-            </template>
-          </Dropdown>
-          <Dropdown type="electric" @select="handleDropDownChanged">
-            <template #trigger>
-              <Button variant="ghost">
-                <img class="header-img" src="@/assets/icons/electric-icon.png" alt="" />
-                <p class="header-button-text">electric</p>
-              </Button>
-            </template>
-          </Dropdown>
-          <Button variant="ghost" @click="handleViewChanged('products')">
-            <img class="header-img" src="@/assets/icons/base-icon.png" alt=""/>
-            <p class="header-button-text">base</p>
-          </Button>
-          <Dropdown type="etc" @select="handleDropDownChanged">
-            <template #trigger>
-              <Button variant="ghost">
-                <img class="header-img" src="@/assets/icons/peek-icon.png" alt="" />
-                <p class="header-button-text">etc</p>
-              </Button>
-            </template>
-          </Dropdown>
+          <template v-for="category in categoryList" :key="category.id">
+            <Dropdown
+                v-if="category.name !== 'base'"
+                :category="category"
+            >
+              <template #trigger>
+                <Button variant="ghost">
+                  <img
+                      class="header-img"
+                      :src="getIconPath(category.name)"
+                      alt=""
+                  />
+                  <p class="header-button-text">{{ category.name }}</p>
+                </Button>
+              </template>
+            </Dropdown>
+
+            <Button
+                v-else
+                variant="ghost"
+                @click="handleViewChanged('products')"
+            >
+              <img
+                  class="header-img"
+                  :src="getIconPath(category.name)"
+                  alt=""
+              />
+              <p class="header-button-text">{{ category.name }}</p>
+            </Button>
+          </template>
         </div>
       </div>
       <div class="flex gap-4">

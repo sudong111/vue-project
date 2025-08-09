@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {computed, onMounted, ref, watch} from 'vue'
+import { useRoute } from 'vue-router'
 import Banner from '@/components/banner.vue'
 import ListBox from '@/components/list-box.vue'
 import {Button} from "@/components/ui/button";
@@ -7,10 +8,11 @@ import {useGuitarStore} from "@/stores/guitar.ts";
 import type {Category, Subtype} from "@/types/interfaces.ts";
 
 const guitarStore = useGuitarStore();
+const route = useRoute();
 const categoryList = ref<Category[]>([]);
 const subtypeList = ref<Subtype[]>([]);
 const selectedCategory = ref<Category | null>(null);
-const selectedSubtype = ref(null);
+const selectedSubtype = ref<Subtype | null>(null);
 
 const filteredSubtypes = computed(() => {
   if (!selectedCategory.value) return [];
@@ -19,16 +21,39 @@ const filteredSubtypes = computed(() => {
   );
 });
 
-watch(selectedCategory, () => {
-  selectedSubtype.value = null
-});
+const setFilter = (query: Record<string, any>) => {
+  const categoryId = Number(query.category_id);
+  const subtypeId = Number(query.subtype_id);
 
+  const category = categoryList.value.find(c => c.id === categoryId) || undefined;
+  const subtype = subtypeList.value.find(s => s.id === subtypeId) || undefined;
+
+  if (category != undefined) {
+    selectedCategory.value = category;
+
+    if (subtype != undefined &&
+        selectedCategory.value != null &&
+        subtype.category_id === category?.id
+    ) {
+      selectedSubtype.value = subtype;
+    }
+  }
+}
+
+const onCategorySelected = () => {
+  selectedSubtype.value = null;
+}
+
+watch(() => route.query, (newQuery) => {
+  setFilter(newQuery);
+});
 
 onMounted(async () => {
   await guitarStore.selectAllCategory();
   await guitarStore.selectAllSubtype();
   categoryList.value = guitarStore.categories;
   subtypeList.value = guitarStore.subtypes;
+  setFilter(route.query);
 });
 </script>
 
@@ -49,6 +74,7 @@ onMounted(async () => {
             <ListBox
                 v-model="selectedCategory"
                 :items="categoryList"
+                @update:modelValue="onCategorySelected"
             />
           </div>
           <div>
