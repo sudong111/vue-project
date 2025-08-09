@@ -25,11 +25,13 @@ public class GuitarService {
     private final GuitarRepository guitarRepository;
     private final GuitarCategoriesRepository guitarCategoriesRepository;
     private final GuitarSubtypesRepository guitarSubtypesRepository;
+    private final S3Service s3Service;
 
-    public GuitarService(GuitarRepository guitarRepository, GuitarCategoriesRepository guitarCategoriesRepository, GuitarSubtypesRepository guitarSubtypesRepository) {
+    public GuitarService(GuitarRepository guitarRepository, GuitarCategoriesRepository guitarCategoriesRepository, GuitarSubtypesRepository guitarSubtypesRepository, S3Service s3Service) {
         this.guitarRepository = guitarRepository;
         this.guitarCategoriesRepository = guitarCategoriesRepository;
         this.guitarSubtypesRepository = guitarSubtypesRepository;
+        this.s3Service = s3Service;
     }
 
     public ResponseDto<Void> insert(GuitarDto guitar, MultipartFile imageFile) {
@@ -42,17 +44,9 @@ public class GuitarService {
             }
 
             Category category = guitarCategoriesRepository.findBySubtypeId(guitar.getSubtype_id());
-            String staticPath = new File("src/main/resources/static/" + category.getName()).getAbsolutePath();
 
-            String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
-            String fileName = UUID.randomUUID() + extension;
-
-            Path filePath = Paths.get(staticPath, fileName);
-            Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-            String imageUrl = "/" + category + "/" + fileName;
+            String imageUrl = s3Service.uploadFile(imageFile, category.getName());
             guitar.setImage_url(imageUrl);
-            //Todo 이미지 캐싱하는걸로 바꾸던가 해야함.
 
             guitarRepository.insertGuitar(guitar);
 
