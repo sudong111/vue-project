@@ -20,7 +20,7 @@ const icons = {
   etc: etcIcon,
 };
 
-const { handleViewChanged } = useNavigation()
+const { handleViewChanged, handleViewChangedWithQuery } = useNavigation()
 const userStore = useUserStore();
 const guitarStore = useGuitarStore();
 const categoryList = ref<Category[]>([]);
@@ -70,7 +70,10 @@ onMounted(async () => {
             <Button
                 v-else
                 variant="ghost"
-                @click="handleViewChanged('products')"
+                @click="handleViewChangedWithQuery('products', [{
+                  category: {id: 3, name: 'base'},
+                  subtype: {id: 0, name: 'All', category_id: 3}
+                }])"
             >
               <img
                   class="header-img"

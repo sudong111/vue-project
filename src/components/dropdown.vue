@@ -14,10 +14,6 @@ const props = defineProps<{
   category: Category
 }>()
 
-const emit = defineEmits<{
-  (e: 'select', value: string): void
-}>()
-
 const menuItems = computed(() => {
   return subtypeList.value
       .filter(subtype => subtype.category_id === props.category.id)

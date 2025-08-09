@@ -16,9 +16,10 @@ const selectedSubtype = ref<Subtype | null>(null);
 
 const filteredSubtypes = computed(() => {
   if (!selectedCategory.value) return [];
-  return subtypeList.value.filter(
-      (item) => item.category_id === selectedCategory.value!.id
-  );
+  return [
+    { id: 0, name: 'All', category_id: selectedCategory.value.id },
+    ...subtypeList.value.filter(item => item.category_id === selectedCategory.value!.id)
+  ];
 });
 
 const setFilter = (query: Record<string, any>) => {
@@ -37,6 +38,9 @@ const setFilter = (query: Record<string, any>) => {
     ) {
       selectedSubtype.value = subtype;
     }
+    else {
+      selectedSubtype.value = {id: 0, name: 'All', category_id: 0}
+    }
   }
 }
 
@@ -51,8 +55,8 @@ watch(() => route.query, (newQuery) => {
 onMounted(async () => {
   await guitarStore.selectAllCategory();
   await guitarStore.selectAllSubtype();
-  categoryList.value = guitarStore.categories;
-  subtypeList.value = guitarStore.subtypes;
+  categoryList.value = [{ id: 0, name: 'All' }, ...guitarStore.categories];
+  subtypeList.value = [{ id: 0, name: 'All', category_id: 0 }, ...guitarStore.subtypes];
   setFilter(route.query);
 });
 </script>
@@ -82,7 +86,7 @@ onMounted(async () => {
             <ListBox
                 v-model="selectedSubtype"
                 :items="filteredSubtypes"
-                :disabled="!selectedCategory || selectedCategory.id === 3"
+                :disabled="!selectedCategory || selectedCategory.id === 3 || selectedCategory.id === 0"
             />
           </div>
         </div>
