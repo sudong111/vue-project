@@ -3,6 +3,8 @@ import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import scrollFade from './directives/scrollFade';
 import scrollBounce from './directives/bounce';
+import Toast from 'vue-toastification'
+import 'vue-toastification/dist/index.css'
 
 import App from './App.vue'
 import router from './router'
@@ -17,6 +19,7 @@ pinia.use(piniaPluginPersistedstate)
 
 app.use(pinia)
 app.use(router)
+app.use(Toast, { position: 'top-center' })
 app.directive('scroll-fade', scrollFade)
 app.directive('scroll-bounce', scrollBounce)
 

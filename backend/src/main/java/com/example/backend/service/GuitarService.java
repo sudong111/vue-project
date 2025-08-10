@@ -45,6 +45,7 @@ public class GuitarService {
 
             Category category = guitarCategoriesRepository.findBySubtypeId(guitar.getSubtype_id());
 
+
             String imageUrl = s3Service.uploadFile(imageFile, category.getName());
             guitar.setImage_url(imageUrl);
 

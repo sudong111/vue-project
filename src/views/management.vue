@@ -8,6 +8,7 @@ import {Button} from "@/components/ui/button";
 import ListBox from '@/components/list-box.vue'
 import ImageUpload from "@/components/image-upload.vue";
 import {Textarea} from "@/components/ui/textarea";
+import {useToast} from 'vue-toastification'
 import { onMounted } from "vue";
 import { useGuitarStore } from "@/stores/guitar.ts";
 import {isNull, isSafeInput, isSafeInt, maxLength, minLength, required, useValidation} from "@/utils/validation.ts";
@@ -16,6 +17,7 @@ import {useNavigation} from "@/utils/navigation.ts";
 const guitarStore = useGuitarStore();
 const { handleViewChanged } = useNavigation();
 const { validateField, validationErrors, isFormValid } = useValidation();
+const toast = useToast();
 const name = ref('');
 const brand = ref('');
 const price = ref(0);
@@ -26,6 +28,7 @@ const categoryList = ref<Category[]>([]);
 const subtypeList = ref<Subtype[]>([]);
 const selectedCategory = ref<Category | null>(null);
 const selectedSubtype = ref<Subtype | null>(null);
+const clearImage = ref(false);
 
 const filteredSubtypes = computed(() => {
   if (!selectedCategory.value) return [];
@@ -38,13 +41,6 @@ watch(selectedCategory, () => {
   selectedSubtype.value = null
 });
 
-onMounted(async () => {
-  await guitarStore.selectAllCategory();
-  await guitarStore.selectAllSubtype();
-  categoryList.value = guitarStore.categories;
-  subtypeList.value = guitarStore.subtypes;
-});
-
 const handleFileSelected = (file: File) => {
   imageFile.value = file
 }
@@ -53,11 +49,22 @@ const clearValidationError = (fieldName: string) => {
   delete validationErrors.value[fieldName];
 };
 
+const clearInputField = () => {
+  name.value = ''
+  brand.value = ''
+  selectedCategory.value = null
+  selectedSubtype.value = null
+  price.value = 0
+  stock.value = 0
+  description.value = ''
+  clearImage.value = true;
+}
+
 const insert = async () => {
   const isNameValid = validateField(name.value, [required, minLength(4), maxLength(200), isSafeInput], 'name');
-  const isBrandValid = validateField(brand.value, [required, minLength(4), maxLength(100), isSafeInput], 'brand');
+  const isBrandValid = validateField(brand.value, [required, minLength(2), maxLength(100), isSafeInput], 'brand');
   const isCategoryValid = validateField(selectedCategory.value, [isNull], 'category')
-  const isSubtypeValid = validateField(selectedSubtype.value, [isNull], 'subtype')
+  const isSubtypeValid = selectedCategory.value?.id != 3 ? validateField(selectedSubtype.value, [isNull], 'subtype') : true;
   const isPriceValid = validateField(price.value.toString(), [required, isSafeInt, isSafeInput], 'price');
   const isStockValid = validateField(stock.value.toString(), [required, isSafeInt, isSafeInput], 'stock');
   const isDescriptionValid = validateField(description.value, [required, minLength(4), maxLength(1000), isSafeInput], 'description');
@@ -66,12 +73,9 @@ const insert = async () => {
     return;
   }
 
-  if(selectedSubtype.value?.id == null) {
-    return;
-  }
   const guitarData: Guitar = {
     name: name.value,
-    subtype_id: selectedSubtype.value.id,
+    subtype_id: selectedSubtype.value ? selectedSubtype.value.id : 3,
     brand: brand.value,
     price: price.value,
     image_url: '',
@@ -87,7 +91,16 @@ const insert = async () => {
   formData.append("image", imageFile.value!);
 
   await guitarStore.insertGuitar(formData);
+  toast.success('저장이 완료되었습니다!')
+  clearInputField();
 }
+
+onMounted(async () => {
+  await guitarStore.selectAllCategory();
+  await guitarStore.selectAllSubtype();
+  categoryList.value = guitarStore.categories;
+  subtypeList.value = guitarStore.subtypes;
+});
 
 </script>
 
@@ -121,6 +134,8 @@ const insert = async () => {
               <div class="absolute top-0 right-0 w-[7.5rem] h-[10rem]">
                 <ImageUpload
                     @file-selected="handleFileSelected"
+                    :isClear="clearImage"
+                    @clear-done="clearImage = false"
                 />
               </div>
             </div>

@@ -1,11 +1,16 @@
 <script setup lang="ts">
-import {ref, defineEmits} from "vue";
+import {ref, defineProps, defineEmits, watch} from "vue";
 
 const previewImage = ref<string | null>(null)
 const selectedFile = ref<File | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)
+const props = defineProps<{
+  isClear: boolean
+}>()
+
 const emit = defineEmits<{
   (e: 'file-selected', file: File): void
+  (e: 'clear-done'): void
 }>()
 
 const handleFileUpload = (event: Event) => {
@@ -37,6 +42,15 @@ const removeImage = () => {
 
   emit('file-selected', null as any)
 }
+
+watch(() => props.isClear,
+    (newVal) => {
+      if (newVal) {
+        removeImage();
+        emit('clear-done');
+      }
+    }
+)
 </script>
 
 <template>
