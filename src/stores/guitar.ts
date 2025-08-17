@@ -5,7 +5,19 @@ import type {Category, Subtype, Guitar} from "@/types/interfaces.ts";
 
 export const useGuitarStore = defineStore('guitar', () => {
 
+    const defaultGuitar: Guitar = {
+        id: 0,
+        name: '',
+        subtype_id: 0,
+        brand: '',
+        price: 0,
+        image_url: '',
+        description: '',
+        stock: 0
+    };
+
     const guitars = useStorage<Guitar[]>('guitar', []);
+    const guitar = useStorage<Guitar>('guitar-detail', defaultGuitar);
     const categories = useStorage<Category[]>('guitar-category', []);
     const subtypes = useStorage<Subtype[]>('guitar-subtype', []);
 
@@ -24,6 +36,28 @@ export const useGuitarStore = defineStore('guitar', () => {
             if (response.ok) {
                 const result = await response.json();
                 guitars.value = result.data;
+            } else {
+                console.log(await response.text());
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const selectGuitarDetail = async (id: number) => {
+        try {
+            const params = new URLSearchParams({
+                id: String(id)
+            });
+
+            const response = await fetch(
+                `http://localhost:8080/api/guitar/detail?${params.toString()}`,
+                { method: "GET" }
+            );
+
+            if (response.ok) {
+                const result = await response.json();
+                guitar.value = result.data;
             } else {
                 console.log(await response.text());
             }
@@ -93,5 +127,5 @@ export const useGuitarStore = defineStore('guitar', () => {
     }
 
 
-    return { guitars, categories, subtypes, selectGuitar, selectAllCategory, selectAllSubtype, insertGuitar };
+    return { guitar, guitars, categories, subtypes, selectGuitarDetail, selectGuitar, selectAllCategory, selectAllSubtype, insertGuitar };
 })

@@ -6,7 +6,7 @@ import Footer from "@/components/footer.vue";
 <template>
   <Header />
   <div class="mt-[4rem]">
-    <div class="flex flex-col min-h-screen">
+    <div class="flex flex-col">
       <router-view />
     </div>
   </div>

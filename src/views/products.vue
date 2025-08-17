@@ -6,8 +6,10 @@ import ListBox from '@/components/list-box.vue'
 import {Button} from "@/components/ui/button";
 import {useGuitarStore} from "@/stores/guitar.ts";
 import type {Category, Subtype, Guitar} from "@/types/interfaces.ts";
+import {useNavigation} from "@/utils/navigation.ts";
 
 const guitarStore = useGuitarStore();
+const { handleDetailView } = useNavigation()
 const route = useRoute();
 const guitarList = ref<Guitar[]>([]);
 const categoryList = ref<Category[]>([]);
@@ -116,8 +118,9 @@ onMounted(async () => {
       <div class="flex w-full flex-wrap gap-3 sm:gap-5 lg:gap-10">
         <div
             v-for="guitar in guitarStore.guitars"
-            :key="guitar.name"
+            :key="guitar.id"
             class="product-img hover-up"
+            @click="handleDetailView('product-detail', guitar.id)"
         >
           <img
               :src="guitar.image_url"

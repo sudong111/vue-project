@@ -25,5 +25,14 @@ export function useNavigation() {
         })
     }
 
-    return { handleViewChanged, handleViewChangedWithQuery }
+    function handleDetailView(view: string, id: number) {
+        router.push({
+            name: `${view}`,
+            query: {
+                id: id
+            }
+        })
+    }
+
+    return { handleViewChanged, handleViewChangedWithQuery, handleDetailView }
 }

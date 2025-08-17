@@ -10,6 +10,8 @@ public interface GuitarRepository {
 
     void insertGuitar(GuitarDto guitar);
 
+    GuitarDto getGuitarById(int id);
+
     GuitarDto[] getGuitarAll();
 
     GuitarDto[] getGuitarByCategoryName(@Param("category_name") String category_name);

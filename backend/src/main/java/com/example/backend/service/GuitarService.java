@@ -69,6 +69,14 @@ public class GuitarService {
         }
     }
 
+    public ResponseDto<GuitarDto> get(int id) {
+        try {
+            return ResponseDto.success("", guitarRepository.getGuitarById(id));
+        } catch (Exception e) {
+            return ResponseDto.fail(e.getMessage(), new GuitarDto());
+        }
+    }
+
     public ResponseDto<Void> duplication(GuitarDto guitar) {
         try{
             if(guitarRepository.findByNameAndBrand(guitar.getName(),guitar.getBrand()) == null) {

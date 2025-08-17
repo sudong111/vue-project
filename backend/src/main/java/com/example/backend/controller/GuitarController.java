@@ -51,4 +51,18 @@ public class GuitarController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result.getMessage());
         }
     }
+
+    @GetMapping("/detail")
+    public ResponseEntity<?> getGuitarDetail(
+            @RequestParam int id
+    ) {
+
+        ResponseDto<GuitarDto> result = guitarService.get(id);
+
+        if (result.isResult()) {
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result.getMessage());
+        }
+    }
 }
