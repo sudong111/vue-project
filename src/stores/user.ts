@@ -20,7 +20,6 @@ export const useUserStore = defineStore('user', () => {
             });
 
             if (response.ok) {
-                console.log("test")
                 const user = await response.json();
                 token.value = user.token;
                 username.value = user.username;

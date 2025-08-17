@@ -11,6 +11,7 @@ import java.util.Date;
 @Setter
 @Builder
 public class GuitarDto {
+    private int id;
     private String name;
     private int subtype_id;
     private String brand;

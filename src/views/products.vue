@@ -5,10 +5,11 @@ import Banner from '@/components/banner.vue'
 import ListBox from '@/components/list-box.vue'
 import {Button} from "@/components/ui/button";
 import {useGuitarStore} from "@/stores/guitar.ts";
-import type {Category, Subtype} from "@/types/interfaces.ts";
+import type {Category, Subtype, Guitar} from "@/types/interfaces.ts";
 
 const guitarStore = useGuitarStore();
 const route = useRoute();
+const guitarList = ref<Guitar[]>([]);
 const categoryList = ref<Category[]>([]);
 const subtypeList = ref<Subtype[]>([]);
 const selectedCategory = ref<Category | null>(null);
@@ -29,19 +30,25 @@ const setFilter = (query: Record<string, any>) => {
   const category = categoryList.value.find(c => c.id === categoryId) || undefined;
   const subtype = subtypeList.value.find(s => s.id === subtypeId) || undefined;
 
-  if (category != undefined) {
-    selectedCategory.value = category;
-
-    if (subtype != undefined &&
-        selectedCategory.value != null &&
-        subtype.category_id === category?.id
-    ) {
-      selectedSubtype.value = subtype;
-    }
-    else {
-      selectedSubtype.value = {id: 0, name: 'All', category_id: 0}
-    }
+  if(category == undefined) {
+    selectedCategory.value = {id: 0, name: 'All'};
+    selectedSubtype.value = {id: 0, name: 'All', category_id: 0};
   }
+  else if(subtype == undefined) {
+    selectedCategory.value = category;
+    selectedSubtype.value = {id: 0, name: 'All', category_id: 0};
+  }
+  else {
+    selectedCategory.value = category;
+    selectedSubtype.value = subtype;
+  }
+}
+
+const setGuitar = async () => {
+  console.log(selectedCategory.value, selectedSubtype.value)
+  await guitarStore.selectGuitar(selectedCategory.value!.name, selectedSubtype.value!.id);
+
+  console.log(guitarStore.guitars);
 }
 
 const onCategorySelected = () => {
@@ -52,12 +59,21 @@ watch(() => route.query, (newQuery) => {
   setFilter(newQuery);
 });
 
+watch([selectedCategory, selectedSubtype], ([newCategory, newSubtype]) => {
+  setFilter({
+    category_id: newCategory?.id ?? 0,
+    subtype_id: newSubtype?.id ?? 0
+  });
+});
+
 onMounted(async () => {
   await guitarStore.selectAllCategory();
   await guitarStore.selectAllSubtype();
+
   categoryList.value = [{ id: 0, name: 'All' }, ...guitarStore.categories];
   subtypeList.value = [{ id: 0, name: 'All', category_id: 0 }, ...guitarStore.subtypes];
   setFilter(route.query);
+  await setGuitar();
 });
 </script>
 
@@ -93,19 +109,23 @@ onMounted(async () => {
         <div class="flex items-end">
           <Button
             variant="submit"
-            @click=""
+            @click="setGuitar()"
           >검색</Button>
         </div>
       </div>
       <div class="flex w-full flex-wrap gap-3 sm:gap-5 lg:gap-10">
-        <div>
-          <div class="product-img hover-up">
-            <img src="../assets/acoustic/nylon/1_acoustic_nylon_Godin-Nylon.jpg" alt="" />
-            <div class="product-text-container">
-              <p class="product-category">[acoustic]</p>
-              <p class="product-title">Godin-Nylon</p>
-              <p class="product-title">324,000</p>
-            </div>
+        <div
+            v-for="guitar in guitarStore.guitars"
+            :key="guitar.name"
+            class="product-img hover-up"
+        >
+          <img
+              :src="guitar.image_url"
+              alt=""
+          />
+          <div class="product-text-container">
+            <p class="product-title">{{ guitar.name }}</p>
+            <p class="product-title">{{ guitar.price.toLocaleString() }}</p>
           </div>
         </div>
       </div>

@@ -1,12 +1,36 @@
 import {defineStore} from "pinia";
 import {useStorage} from "@vueuse/core";
-import type {Category, Subtype} from "@/types/interfaces.ts";
+import type {Category, Subtype, Guitar} from "@/types/interfaces.ts";
 
 
 export const useGuitarStore = defineStore('guitar', () => {
 
+    const guitars = useStorage<Guitar[]>('guitar', []);
     const categories = useStorage<Category[]>('guitar-category', []);
     const subtypes = useStorage<Subtype[]>('guitar-subtype', []);
+
+    const selectGuitar = async (category: string, subtype_id: number) => {
+        try {
+            const params = new URLSearchParams({
+                category,
+                subtype_id: String(subtype_id)
+            });
+
+            const response = await fetch(
+                `http://localhost:8080/api/guitar/select?${params.toString()}`,
+                { method: "GET" }
+            );
+
+            if (response.ok) {
+                const result = await response.json();
+                guitars.value = result.data;
+            } else {
+                console.log(await response.text());
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const selectAllCategory = async () => {
         try {
@@ -69,5 +93,5 @@ export const useGuitarStore = defineStore('guitar', () => {
     }
 
 
-    return { categories, subtypes, selectAllCategory, selectAllSubtype, insertGuitar };
+    return { guitars, categories, subtypes, selectGuitar, selectAllCategory, selectAllSubtype, insertGuitar };
 })

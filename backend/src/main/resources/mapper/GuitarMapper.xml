@@ -17,4 +17,23 @@
         VALUES (#{name}, #{subtype_id}, #{brand}, #{price}, #{image_url}, #{description}, #{stock})
     </insert>
 
+    <select id="getGuitarAll" resultType="com.example.backend.dto.GuitarDto">
+        SELECT *
+        FROM guitar;
+    </select>
+
+    <select id="getGuitarByCategoryName" resultType="com.example.backend.dto.GuitarDto">
+        SELECT g.*
+        FROM guitar g
+        JOIN guitar_subtypes gs ON g.subtype_id = gs.id
+        JOIN guitar_categories gc ON gs.category_id = gc.id
+        WHERE gc.name = #{category_name};
+    </select>
+
+    <select id="getGuitarBySubtypeId" resultType="com.example.backend.dto.GuitarDto">
+        SELECT *
+        FROM guitar
+        WHERE subtype_id = #{subtype_id}
+    </select>
+
 </mapper>

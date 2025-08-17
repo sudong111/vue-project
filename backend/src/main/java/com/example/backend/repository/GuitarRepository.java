@@ -10,6 +10,12 @@ public interface GuitarRepository {
 
     void insertGuitar(GuitarDto guitar);
 
+    GuitarDto[] getGuitarAll();
+
+    GuitarDto[] getGuitarByCategoryName(@Param("category_name") String category_name);
+
+    GuitarDto[] getGuitarBySubtypeId(@Param("subtype_id") int subtype_id);
+
     /**
      * name 과 brand로 기타를 찾습니다.
      * @param name 찾을 기타의 name

@@ -64,7 +64,7 @@ const insert = async () => {
   const isNameValid = validateField(name.value, [required, minLength(4), maxLength(200), isSafeInput], 'name');
   const isBrandValid = validateField(brand.value, [required, minLength(2), maxLength(100), isSafeInput], 'brand');
   const isCategoryValid = validateField(selectedCategory.value, [isNull], 'category')
-  const isSubtypeValid = selectedCategory.value?.id != 3 ? validateField(selectedSubtype.value, [isNull], 'subtype') : true;
+  const isSubtypeValid = selectedCategory.value?.name != 'base' ? validateField(selectedSubtype.value, [isNull], 'subtype') : true;
   const isPriceValid = validateField(price.value.toString(), [required, isSafeInt, isSafeInput], 'price');
   const isStockValid = validateField(stock.value.toString(), [required, isSafeInt, isSafeInput], 'stock');
   const isDescriptionValid = validateField(description.value, [required, minLength(4), maxLength(1000), isSafeInput], 'description');
@@ -75,7 +75,7 @@ const insert = async () => {
 
   const guitarData: Guitar = {
     name: name.value,
-    subtype_id: selectedSubtype.value ? selectedSubtype.value.id : 3,
+    subtype_id: selectedSubtype.value ? selectedSubtype.value.id : 0,
     brand: brand.value,
     price: price.value,
     image_url: '',
